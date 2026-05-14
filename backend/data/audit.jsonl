@@ -1,0 +1,2 @@
+{"ts": "2026-05-12T02:59:42.914424+00:00", "action": "query", "tenant_id": "tenant-alpha", "actor": "sk-a…23", "request_id": "rid-123", "detail": {"question": "Hi", "citations": 2}}
+{"ts": "2026-05-12T02:59:43.009104+00:00", "action": "query", "tenant_id": "t", "actor": "-", "request_id": "-", "detail": {"obj": "<Unjsonable>"}}

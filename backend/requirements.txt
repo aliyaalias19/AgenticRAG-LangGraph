@@ -1,0 +1,27 @@
+fastapi
+uvicorn[standard]
+python-multipart
+httpx
+slowapi
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-community>=0.3.0
+langchain-openai>=0.2.0
+langchain-ollama>=0.2.0
+langchain-aws>=0.2.0
+langgraph>=0.2.0
+qdrant-client>=1.9.0
+rank-bm25
+sentence-transformers
+# Layout-aware PDF extraction. Used by ingestion/pipeline.py:_load_markdown
+# to preserve headings, tables, and page boundaries that PyPDFLoader would
+# flatten. Required at ingest time — without it /documents POST crashes
+# with ModuleNotFoundError.
+pymupdf4llm>=0.0.17
+pydantic>=2.0.0
+ragas
+datasets
+boto3
+openai>=1.58.1
+fastmcp
+prometheus-client>=0.20.0

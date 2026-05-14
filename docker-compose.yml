@@ -1,0 +1,80 @@
+version: "3.9"
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    environment:
+      - QDRANT_URL=http://qdrant:6333
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - DATA_DIR=/app/data
+      - CHROMA_PATH=/app/data
+    volumes:
+      - pdf_data:/app/data
+      # Persist the HuggingFace model cache across image rebuilds. Without
+      # this, every `docker compose build backend` wipes ~/.cache/huggingface
+      # and the next first query re-downloads the cross-encoder (~570MB).
+      # The volume turns a 4-minute first-query into a ~10-second model load.
+      - hf_cache:/home/appuser/.cache/huggingface
+    depends_on:
+      qdrant:
+        condition: service_started
+      ollama:
+        condition: service_started
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+    # No HTTP healthcheck — the qdrant image is distroless and has neither
+    # curl nor wget. The backend probes /collections/{name} on connect, so
+    # readiness is enforced at application level. Operators wanting a true
+    # healthcheck should run a sidecar that polls /readyz over HTTP.
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    restart: unless-stopped
+    # Uncomment for GPU support:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+volumes:
+  qdrant_data:    # Qdrant collections, snapshots, payload indexes
+  pdf_data:       # Uploaded PDFs + BM25 index + audit log
+  ollama_models:  # Ollama LLM and embedding models
+  hf_cache:       # HuggingFace cache for the cross-encoder reranker
