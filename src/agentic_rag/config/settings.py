@@ -40,6 +40,14 @@ class CorpusSettings(BaseSettings):
     repo_ref: str = Field(default="main")
     docs_subpath: str = Field(default="content/en/docs")
     min_document_chars: int = Field(default=200, ge=0)
+    excluded_path_prefixes: tuple[str, ...] = Field(
+        default=(
+            "reference/kubernetes-api",
+            "reference/instrumentation/metrics",
+            "reference/command-line-tools-reference/feature-gates",
+        ),
+        description="Path prefixes excluded as auto-generated or stub content",
+    )
 
 
 class LoggingSettings(BaseSettings):

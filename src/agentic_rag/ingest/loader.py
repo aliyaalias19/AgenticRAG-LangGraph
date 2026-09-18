@@ -14,12 +14,21 @@ EXCLUDED_FILENAMES = frozenset({"_index.md", "_print"})
 EXCLUDED_DIR_NAMES = frozenset({"includes", "_print"})
 
 
-def _is_excluded(path: Path, docs_root: Path) -> bool:
+def _is_excluded(
+    path: Path,
+    docs_root: Path,
+    excluded_prefixes: tuple[str, ...],
+) -> bool:
     """Return True if the path should be skipped during ingestion."""
     if path.name in EXCLUDED_FILENAMES:
         return True
-    relative_parts = path.relative_to(docs_root).parts
-    return any(part in EXCLUDED_DIR_NAMES for part in relative_parts)
+
+    relative = path.relative_to(docs_root)
+    if any(part in EXCLUDED_DIR_NAMES for part in relative.parts):
+        return True
+
+    relative_str = relative.as_posix()
+    return any(relative_str.startswith(prefix) for prefix in excluded_prefixes)
 
 
 def _extract_title(post: frontmatter.Post, path: Path) -> str:
@@ -35,7 +44,11 @@ def _string_metadata(post: frontmatter.Post) -> dict[str, str]:
     return {key: value for key, value in post.metadata.items() if isinstance(value, str)}
 
 
-def load_documents(docs_root: Path, min_chars: int) -> list[Document]:
+def load_documents(
+    docs_root: Path,
+    min_chars: int,
+    excluded_prefixes: tuple[str, ...] = (),
+) -> list[Document]:
     """Load all eligible markdown documents beneath ``docs_root``."""
     if not docs_root.is_dir():
         message = f"Documentation root does not exist: {docs_root}"
@@ -50,7 +63,7 @@ def load_documents(docs_root: Path, min_chars: int) -> list[Document]:
     skipped_unparseable = 0
 
     for path in tqdm(markdown_paths, desc="Loading documents", unit="file"):
-        if _is_excluded(path, docs_root):
+        if _is_excluded(path, docs_root, excluded_prefixes):
             skipped_excluded += 1
             continue
 

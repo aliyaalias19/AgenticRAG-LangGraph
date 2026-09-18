@@ -76,6 +76,7 @@ def ingest_corpus(settings: Settings | None = None) -> CorpusManifest:
     documents = load_documents(
         docs_root=docs_root,
         min_chars=settings.corpus.min_document_chars,
+        excluded_prefixes=settings.corpus.excluded_path_prefixes,
     )
 
     write_corpus(documents, settings.paths.processed_dir / CORPUS_FILENAME)
