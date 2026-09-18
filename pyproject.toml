@@ -4,7 +4,11 @@ version = "0.1.0"
 description = "Adaptive Agentic RAG platform with hybrid retrieval, QLoRA adaptation, and self-hosted vLLM inference"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "pydantic>=2.13.5",
+    "pydantic-settings>=2.15.0",
+    "structlog>=26.1.0",
+]
 
 [build-system]
 requires = ["uv_build>=0.12.16,<0.13.0"]
