@@ -5,10 +5,16 @@ description = "Adaptive Agentic RAG platform with hybrid retrieval, QLoRA adapta
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "gitpython>=3.1.62",
     "pydantic>=2.13.5",
     "pydantic-settings>=2.15.0",
+    "python-frontmatter>=1.3.0",
     "structlog>=26.1.0",
+    "tqdm>=4.70.1",
 ]
+
+[project.scripts]
+agentic-rag = "agentic_rag.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.12.16,<0.13.0"]
@@ -22,6 +28,7 @@ dev = [
     "pytest-asyncio>=1.4.0",
     "pytest-cov>=7.1.0",
     "ruff>=0.16.8",
+    "types-tqdm>=4.70.0.20260906",
 ]
 
 [tool.ruff]
