@@ -43,6 +43,7 @@ data/interim/
 *.parquet
 *.duckdb
 qdrant_storage/
+data/llm_cache/
 
 # Results — keep committed plots, ignore bulky raw runs
 results/raw/
