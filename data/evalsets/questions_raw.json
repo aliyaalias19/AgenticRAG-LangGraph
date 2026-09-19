@@ -1,0 +1,2414 @@
+{
+  "run": {
+    "created_at": "2026-09-19T15:30:40.199764Z",
+    "model": "claude-sonnet-4-5-20250929",
+    "prompt_version": "v1",
+    "documents_sampled": 150,
+    "questions_generated": 300,
+    "input_tokens": 284964,
+    "output_tokens": 10510,
+    "random_seed": 42
+  },
+  "questions": [
+    {
+      "question_id": "q_6480817adede3e6b",
+      "question": "What is the minimum Linux kernel version required for cgroup v2?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/architecture/cgroups",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_97e2740076298a0a",
+      "question": "Which kubelet configuration parameter controls whether the kubelet starts on cgroup v1 nodes?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/architecture/cgroups",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_aa355a669d710d16",
+      "question": "What field in a Kubernetes resource represents the desired state that controllers work to achieve?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/architecture/controller",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f49563803c636948",
+      "question": "Does the Job controller run Pods and containers itself or does it interact with the API server?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/architecture/controller",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_ed054277dbb27438",
+      "question": "What field must be set to true in ownerReference to block owner deletion during foreground cascading deletion?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/architecture/garbage-collection",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_3a05befb445d0a23",
+      "question": "What are the two kubelet disk usage thresholds that trigger container image garbage collection?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/architecture/garbage-collection",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f8c51f617401fb68",
+      "question": "How do worker machines periodically signal to the control plane that they are still functioning and available?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/architecture/leases",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a9d4d712b769248e",
+      "question": "What mechanism ensures that only one replica of a control plane component is actively running while others remain on standby in a high availability setup?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/architecture/leases",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_d4f602b07dc05ca7",
+      "question": "How can I ensure clients see all available resources across the cluster when API servers are running different Kubernetes releases during an upgrade?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/architecture/mixed-version-proxy",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_497377d65ac761e1",
+      "question": "What happens when a request arrives at an API server that doesn't recognize the requested resource because it's running an older version?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/architecture/mixed-version-proxy",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_0a4eb1ae88ceb956",
+      "question": "How should I configure access controls to prevent regular users from modifying hardware device class definitions?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/cluster-administration/dra",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_018395f62aca8096",
+      "question": "What metrics should I monitor to detect performance bottlenecks when scheduling pods that need specialized hardware resources?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/cluster-administration/dra",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_7fad5547aaddccf5",
+      "question": "What components must be configured to enable dual-stack networking in a Kubernetes cluster?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/cluster-administration/networking",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_46f0d5c7d3888367",
+      "question": "Why does Kubernetes avoid dynamic port allocation and what problem does this approach prevent?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/cluster-administration/networking",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_1e0402a4a1bf891a",
+      "question": "What are the differences in how system components write logs depending on whether they run in containers versus directly on the host?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/cluster-administration/observability",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_2d0670425b4ebfb9",
+      "question": "How do the metrics endpoints exposed by kubelet differ from those exposed by other control plane components like kube-apiserver?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/cluster-administration/observability",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_d9489e2f8ab8161f",
+      "question": "I need to troubleshoot slow API requests in my cluster but I don't have visibility into where the latency is occurring. How can I capture timing information?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/cluster-administration/system-traces",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_926c9a236439506c",
+      "question": "My kubelet is making requests to the container runtime but I can't see the full picture of what's happening during pod startup. How do I get detailed operation timing data?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/cluster-administration/system-traces",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_2e4d83c6ce6d09d4",
+      "question": "I need to store database connection strings that differ between my local development environment and production cluster. How can I avoid hardcoding these values in my application?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/configuration/configmap",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5daac418bd1cf120",
+      "question": "My application configuration file is 2 MiB and I need to make it available to my pods. What options do I have since it exceeds the usual limit?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/configuration/configmap",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_ff00f3eea772fe0a",
+      "question": "What command-line flag allows setting the scheduling priority of the kubelet process on Windows nodes?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/configuration/windows-resource-management",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_be9f217e2b133260",
+      "question": "What isolation mechanism does Windows use per container instead of cgroups?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/configuration/windows-resource-management",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_312eaaed9b13ea3d",
+      "question": "What is the hostname of a Container in Kubernetes?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/containers/container-environment",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a52446e508fde925",
+      "question": "How are Pod name and namespace exposed to a Container?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/containers/container-environment",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c7c56f8ed4c22dbe",
+      "question": "What are the three types of hook handler implementations available for Container lifecycle hooks?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/containers/container-lifecycle-hooks",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_dff12aee25010e66",
+      "question": "Does the PostStart hook run synchronously or concurrently with the container's ENTRYPOINT?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/containers/container-lifecycle-hooks",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_04a2dad981d7dba7",
+      "question": "What plugin allows the kubelet to work with different systems for running containers without recompiling Kubernetes?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/containers/cri",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_2bcaee45cef27b75",
+      "question": "What happens when a node's kubelet tries to connect to a system that only supports the older API version after upgrading to Kubernetes v1.26?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/containers/cri",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a27b3cc6f8efe74f",
+      "question": "How can I add new APIs to my Kubernetes cluster that go beyond what the core system provides?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/extend-kubernetes/api-extension/apiserver-aggregation",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_7ccd4941639b1d7d",
+      "question": "What networking performance requirements must supplemental API servers meet when communicating with the main Kubernetes control plane?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/extend-kubernetes/api-extension/apiserver-aggregation",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_3c7ba537fca9431b",
+      "question": "What software component is responsible for loading the cluster networking extensions on each node after version 1.24?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/extend-kubernetes/compute-storage-net/network-plugins",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_7c5b98c7f4d81aaf",
+      "question": "How do I limit the incoming and outgoing data transfer rates for my pods using annotations?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/extend-kubernetes/compute-storage-net/network-plugins",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_72a89ce1f649e21d",
+      "question": "What components are responsible for both exposing the Kubernetes API and storing its data persistently?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/overview/components",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_3d580080761af2c0",
+      "question": "Which components would need to be present on every machine in a cluster to ensure pods can run and communicate over the network?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/overview/components",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_ac4d9b6fb0c25066",
+      "question": "What authentication method does kubectl use when running inside a Pod versus from outside the cluster?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/overview/kubectl",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_d48dabbed345be8f",
+      "question": "Why is declarative management with kubectl apply preferred over imperative commands for production workloads?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/overview/kubectl",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_3df1797a706a5446",
+      "question": "I need to store build timestamps and git commit hashes with my deployments for audit purposes, but this data is too large and unstructured for labels. What should I use?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/overview/working-with-objects/annotations",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b8b4e411240db8bc",
+      "question": "My CI/CD tool needs to attach release information and registry addresses to objects, including special characters and JSON data that labels don't support. How can I store this metadata?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/overview/working-with-objects/annotations",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c950644567595362",
+      "question": "I need to list only the pods that are currently assigned to a specific worker node. How can I filter my query to show just those?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/overview/working-with-objects/field-selectors",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_4b44250ed7731d51",
+      "question": "I want to exclude all resources in the default namespace from my search results when looking across the entire cluster. How do I do this?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/overview/working-with-objects/field-selectors",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5950b1e437b49bfa",
+      "question": "What happens to changes made directly to live objects when using declarative object configuration?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/overview/working-with-objects/object-management",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_ba7e8068cef9aff0",
+      "question": "Which API operation does the imperative replace command use to update objects?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/overview/working-with-objects/object-management",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_42d444f714fbd12e",
+      "question": "What HTTP status code does the API server return when a Pod violates a LimitRange constraint?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/policy/limit-range",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_3acebd75be509d63",
+      "question": "At what stage do LimitRange validations occur for Pods?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/policy/limit-range",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_0d758c012d439b82",
+      "question": "What are the two steps kube-scheduler uses to select a node for a pod?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/scheduling-eviction/kube-scheduler",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e79feccc13929932",
+      "question": "What are nodes called that meet the scheduling requirements for a Pod?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/scheduling-eviction/kube-scheduler",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_44463c6274f4c41e",
+      "question": "How can I configure Kubernetes to stop searching for suitable machines after checking a percentage of available hosts?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/scheduling-eviction/scheduler-perf-tuning",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_1134d81696900cda",
+      "question": "What setting controls the trade-off between how quickly workloads get assigned to machines versus making optimal placement choices?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/scheduling-eviction/scheduler-perf-tuning",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_74b9a51c79f6908a",
+      "question": "How can I prevent my containers from gaining additional permissions after they start running?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/security/application-security-checklist",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_274d9880a62b6722",
+      "question": "What access controls should I configure to ensure anonymous clients cannot interact with my cluster's API?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/security/application-security-checklist",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_2ca8e06a4f959ebf",
+      "question": "What measures should I take to verify that the container images I'm running haven't been tampered with in the supply chain?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/security/cloud-native-security",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_683eb9a1feee0ea3",
+      "question": "How can I restrict which API operations different users and services are allowed to perform in my cluster?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/security/cloud-native-security",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_fd2839e40423e066",
+      "question": "What permissions must be granted to a node-local DRA driver beyond basic status subresource access?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/security/hardening-guide/dynamic-resource-allocation",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a6638eb8cc750806",
+      "question": "What distinguishes the RBAC configuration for a scheduler from that of a node-local DRA driver when updating ResourceClaims?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/security/hardening-guide/dynamic-resource-allocation",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_1d8d068ea6798e70",
+      "question": "What security risks can arise from combining a misconfigured scheduler with the ability for users to label nodes?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/security/hardening-guide/scheduler",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_bedbe3258956c8d5",
+      "question": "How should the bind-address and authentication-kubeconfig settings work together to secure the scheduler in production environments?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/security/hardening-guide/scheduler",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c98296a3264d7bd7",
+      "question": "My Windows containers are storing sensitive configuration data on disk in plain text. How can I prevent unauthorized access to these files?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/security/windows-security",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_537eb8b2c7b56f8f",
+      "question": "I need my Windows container processes to run under a specific user account rather than the default. How do I configure this?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/security/windows-security",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e68ab6bced9fa61a",
+      "question": "During a rolling update, traffic is being dropped even though some pods are still running. How can I ensure service availability while pods are being deleted?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/services-networking/endpoint-slices",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_ea431db1aca8cd82",
+      "question": "I have a dual-stack service with both IPv4 and IPv6 addresses, but kube-proxy seems to be getting frequent updates. Why is my service generating so much network traffic to all nodes?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/services-networking/endpoint-slices",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_05df5cbfb59801cb",
+      "question": "Which ingress controllers does the Kubernetes project officially support and maintain?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/services-networking/ingress-controllers",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c654a8ac602c704b",
+      "question": "What annotation marks an IngressClass as the default IngressClass in a cluster?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/services-networking/ingress-controllers",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_3ed4ef2689b4e4b9",
+      "question": "What field in a PersistentVolumeClaim specifies the StorageClass for dynamic provisioning?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/storage/dynamic-provisioning",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_136daa738882f7a3",
+      "question": "Which admission controller must be enabled to automatically add a default StorageClass to PersistentVolumeClaims?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/storage/dynamic-provisioning",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b00c70f49ebc8ffd",
+      "question": "What component must provide CSI ephemeral volumes?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/storage/ephemeral-volumes",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_d5bf920f6abf7b03",
+      "question": "Which field in the CSIDriver spec prevents a driver from being used as an inline ephemeral volume?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/storage/ephemeral-volumes",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_2a751eaa7e61152b",
+      "question": "How does the scheduler determine if a node has enough available space to provision a pending volume before placing a pod there?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/storage/storage-capacity",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_7a5af992ecf66bec",
+      "question": "What happens when a pod requires multiple volumes but one location runs out of room after the first volume is already provisioned?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/storage/storage-capacity",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_af64f2130952cd6e",
+      "question": "How can I change the performance characteristics of a persistent storage claim after it has been created?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/storage/volume-attributes-classes",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_0d2a266622484151",
+      "question": "What happens when I switch a storage claim from one tier to another tier with different throughput settings?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/storage/volume-attributes-classes",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_60157fd285c777e4",
+      "question": "How can I automatically adjust the CPU and memory allocated to running containers based on their actual usage patterns?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/workloads/autoscaling",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f39408da375cdaf4",
+      "question": "What options exist for dynamically changing the number of pod copies running based on metrics like processing queue depth or time of day?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/workloads/autoscaling",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_2afc4bf5f551059a",
+      "question": "What happens to dependent objects when the TTL-after-finished controller removes an expired Job, and what mechanism does Kubernetes use for this process?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/workloads/controllers/ttlafterfinished",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_63f5d13f0ce30040",
+      "question": "When does the TTL timer begin counting and what conditions must be met before a Job can actually be deleted by the controller?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/workloads/controllers/ttlafterfinished",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_83b5e5cfa4f2f38a",
+      "question": "What happens to the total resource consumption when a Pod uses a RuntimeClass that defines overhead values?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/workloads/pods/advanced-pod-config",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_72f63b742c912073",
+      "question": "If a node has taints applied and multiple Pods with different PriorityClasses are waiting to be scheduled, how does Kubernetes determine which Pods can run on that node?",
+      "question_type": "multi_hop",
+      "source_doc_id": "concepts/workloads/pods/advanced-pod-config",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_ff0959b3dd4e001f",
+      "question": "My container needs to know its own unique identifier to register with an external service, but I don't want to hardcode values. How can I inject this information?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/workloads/pods/downward-api",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_bd83bc09c5e8cfde",
+      "question": "My application running in a container needs to know what resource limits have been set for it so it can tune its memory usage accordingly. How can I provide this information?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/workloads/pods/downward-api",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_23e727be71c93821",
+      "question": "My container image doesn't include a shell or debugging tools, so kubectl exec isn't working for troubleshooting. How can I debug this pod?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/workloads/pods/ephemeral-containers",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_64ebb2347dd638b5",
+      "question": "I need to inspect a running pod to troubleshoot a production bug, but I can't modify the pod spec or restart it. What are my options?",
+      "question_type": "scenario",
+      "source_doc_id": "concepts/workloads/pods/ephemeral-containers",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_948ef6a70d36a8e2",
+      "question": "What happens to a Pod's hostname and FQDN when setHostnameAsFQDN is set to true and the subdomain field is configured?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/workloads/pods/pod-hostname",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c306c8f2dd22b8aa",
+      "question": "Which fields cannot be set simultaneously with hostnameOverride in a Pod specification?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/workloads/pods/pod-hostname",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_6b72c9e7e55bb860",
+      "question": "What happens to a Pod when the referenced PodGroup does not exist yet?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/workloads/pods/scheduling-group",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5ac90ad192fa145f",
+      "question": "Can a Pod be moved to a different PodGroup after the schedulingGroup field is set?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/workloads/pods/scheduling-group",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b212de51d58a1bc5",
+      "question": "What does the kubelet do when a static Pod fails?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/workloads/pods/static-pods",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_55e47162eb662397",
+      "question": "Can the spec of a static Pod refer to ServiceAccount, ConfigMap, or Secret objects?",
+      "question_type": "direct",
+      "source_doc_id": "concepts/workloads/pods/static-pods",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_0f757de855849579",
+      "question": "How can I specify that when the scheduler needs to remove containers from a set of related pods, it must remove all of them together rather than removing them one at a time?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/workloads/workload-api/disruption-and-priority",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b283f96072e0f81e",
+      "question": "What happens when I assign different importance levels to individual containers versus the collection they belong to during scheduling decisions?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/workloads/workload-api/disruption-and-priority",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_76cd903f41332340",
+      "question": "How can I ensure all containers in a group land on machines that share the same physical location to reduce network latency?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/workloads/workload-api/topology-aware-scheduling",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e440fd5f220b1ef3",
+      "question": "What happens when I try to add more containers to a group but the chosen location doesn't have enough resources to accommodate them?",
+      "question_type": "paraphrased",
+      "source_doc_id": "concepts/workloads/workload-api/topology-aware-scheduling",
+      "source_section": "concepts",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f952c5e567a80a2d",
+      "question": "How do I configure the node agent to verify API server requests using X.509 certificates instead of allowing unauthenticated access?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/access-authn-authz/kubelet-authn-authz",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e4c06bab67105ab6",
+      "question": "What permissions does the API server's client certificate need to access container logs and performance statistics on worker machines?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/access-authn-authz/kubelet-authn-authz",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_bba4e9e5d520df81",
+      "question": "What credential requirements must a kubelet meet to be authorized by the Node authorizer, and what additional plugin should be enabled to restrict which nodes and pods it can modify?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/access-authn-authz/node",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e984353ceb8d3214",
+      "question": "When the ServiceAccountNodeAudienceRestriction feature gate is enabled, what sources from a pod spec determine which token audiences a kubelet is allowed to request?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/access-authn-authz/node",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b2114d87a29bf1c7",
+      "question": "What are the differences between Baseline and Restricted profiles for the allowedCapabilities field in terms of permitted values?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/access-authn-authz/psp-to-pod-security-standards",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c956b43b93153534",
+      "question": "How do the validation requirements for seccomp allowedProfileNames differ between Baseline and Restricted profiles regarding trailing commas?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/access-authn-authz/psp-to-pod-security-standards",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_bec3d519aecc638c",
+      "question": "I need to integrate our external authorization service to control what users can do in the cluster. How do I configure the API server to call out to it?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/access-authn-authz/webhook",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c5f88db338df57ce",
+      "question": "Our authorization service is rejecting requests but other authorizers are still allowing them through. How can we make our service block access immediately without checking other authorizers?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/access-authn-authz/webhook",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f07f1ebcab29f8f3",
+      "question": "My admission webhook needs to reject a request and I want to include an explanation for why it was denied. Which field should I populate in my response?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/config-api/apiserver-admission.v1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_dd060ea23381b5a7",
+      "question": "I'm writing an admission webhook and need to track which incoming request corresponds to which response I send back. What identifier should I use?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/config-api/apiserver-admission.v1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_597a1225d8d0df2a",
+      "question": "What field in ExecCredentialSpec indicates whether stdin has been passed to the exec plugin?",
+      "question_type": "direct",
+      "source_doc_id": "reference/config-api/client-authentication.v1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_fb3a575b3e2758ff",
+      "question": "What does the InsecureSkipTLSVerify field do in the Cluster struct?",
+      "question_type": "direct",
+      "source_doc_id": "reference/config-api/client-authentication.v1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_9f011f977f9d8bb2",
+      "question": "What pattern must annotation keys match in ImageReviewSpec for them to be included?",
+      "question_type": "direct",
+      "source_doc_id": "reference/config-api/imagepolicy.v1alpha1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_31d9311c9f870a1c",
+      "question": "What does the allowed field in ImageReviewStatus indicate?",
+      "question_type": "direct",
+      "source_doc_id": "reference/config-api/imagepolicy.v1alpha1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_1e76432654d24d17",
+      "question": "What happens when multiple CredentialProvider plugins match a single image in kubelet?",
+      "question_type": "direct",
+      "source_doc_id": "reference/config-api/kubelet-config.v1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e3c7c61e8ee8b450",
+      "question": "What is the purpose of the defaultCacheDuration field in a CredentialProvider configuration?",
+      "question_type": "direct",
+      "source_doc_id": "reference/config-api/kubelet-config.v1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_cb789ec0ba9a6c6c",
+      "question": "How do I configure a plugin to supply registry authentication information when pulling container images?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/config-api/kubelet-credentialprovider.v1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_7ddc02312c21a94c",
+      "question": "What format should an external authentication plugin use to return login details for private container registries?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/config-api/kubelet-credentialprovider.v1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_67871e33ed6212b2",
+      "question": "How can I view real-time statistics about request queuing and execution when the API server is under heavy load?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/debug-cluster/flow-control",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_1e2dc3b9b26ef950",
+      "question": "What HTTP headers can I inspect to understand how my API requests were categorized and handled during server congestion?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/debug-cluster/flow-control",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b78ed809628c959b",
+      "question": "How do I filter application performance measurements by specific labels when querying the API?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/external-api/custom-metrics.v1beta2",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b5ac0897c550f551",
+      "question": "What time window information is included when I retrieve rate-based performance data for a Kubernetes object?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/external-api/custom-metrics.v1beta2",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_8559a4f3c12cc414",
+      "question": "How do the timestamp and window fields together define the collection interval for both NodeMetrics and PodMetrics?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/external-api/metrics.v1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_02d7b9820effe9d9",
+      "question": "What is the difference between how memory usage is stored in NodeMetrics versus PodMetrics?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/external-api/metrics.v1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_8fc20fb440921936",
+      "question": "What time interval do the timestamp and window fields define for both NodeMetrics and PodMetrics?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/external-api/metrics.v1beta1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_1390d77fa73968b8",
+      "question": "How does the structure of list items differ between NodeMetricsList and PodMetricsList in terms of what metrics they contain?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/external-api/metrics.v1beta1",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_49cb0c447a3e6dca",
+      "question": "I need to ensure no one can make unauthorized changes to my production containers after deployment. How can I achieve this?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/glossary/immutable-infrastructure",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b57457885449b484",
+      "question": "I want a complete audit trail of every change made to my infrastructure. What approach should I combine with version control?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/glossary/immutable-infrastructure",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_d1b4c04f5902e2ae",
+      "question": "My low-priority API requests are getting delayed because a few users are flooding the system with requests. How can I prevent high-volume clients from blocking everyone else?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/glossary/shuffle-sharding",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b74c0d1b737632d9",
+      "question": "I need to distribute incoming requests across queues so that one heavy user doesn't starve out lighter users, but I can't afford to create thousands of queues. What approach should I use?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/glossary/shuffle-sharding",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_005136871924396f",
+      "question": "What is the minimum containerd version required to use CRI-based metrics collection?",
+      "question_type": "direct",
+      "source_doc_id": "reference/instrumentation/cri-pod-container-metrics",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_0a7d9a879dbd799a",
+      "question": "Which RPC does the kubelet use to query the CRI runtime for pod and container metrics?",
+      "question_type": "direct",
+      "source_doc_id": "reference/instrumentation/cri-pod-container-metrics",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5455f1eb89b25dc2",
+      "question": "Which feature gate enables the /statusz endpoint for Kubernetes components?",
+      "question_type": "direct",
+      "source_doc_id": "reference/instrumentation/zpages",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e8bac9dc20f2b2d2",
+      "question": "What Accept header parameters are required to request the structured JSON response from the /flagz endpoint?",
+      "question_type": "direct",
+      "source_doc_id": "reference/instrumentation/zpages",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_00c9d9da84f24f22",
+      "question": "What kubectl command is used to add an environment variable to an existing deployment?",
+      "question_type": "direct",
+      "source_doc_id": "reference/kubectl/docker-cli-to-kubectl",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e79a42420b0613da",
+      "question": "What escape sequence is used to detach from a container when using kubectl attach?",
+      "question_type": "direct",
+      "source_doc_id": "reference/kubectl/docker-cli-to-kubectl",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c72cc760c9803c6b",
+      "question": "What command-line utility allows me to communicate with my container orchestration cluster using its API?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/kubectl/introduction",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_7f1c067f1b965c3c",
+      "question": "How can I view the logs and running state of my containerized applications in the cluster?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/kubectl/introduction",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_eb9cf091729578b2",
+      "question": "How can I extract specific fields from command-line output using curly brace expressions with kubectl?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/kubectl/jsonpath",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e17fbb0ca2bf921c",
+      "question": "What syntax allows me to filter and format structured data returned by cluster queries?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/kubectl/jsonpath",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_274c2c7ad5333f7c",
+      "question": "How can I tell if a request was rejected or allowed by the access control system when reviewing cluster logs?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/labels-annotations-taints/audit-annotations",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_ac3c72a4f18084a6",
+      "question": "What metadata gets added to logs when an API request uses an old version that will be removed in a future release?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/labels-annotations-taints/audit-annotations",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_66708c4a7235a132",
+      "question": "Which components need access to both the kubelet API and the etcd server client API?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/networking/ports-and-protocols",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_50698dcc6a088d1c",
+      "question": "What protocols and port ranges overlap between control plane and worker nodes?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/networking/ports-and-protocols",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c8009ffd6b11ef89",
+      "question": "What protocol and cloud provider requirements must be met to use SCTP with LoadBalancer Services?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/networking/service-protocols",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_36553b229d6fdff8",
+      "question": "What determines whether the session from a load balancer to a workload should be marked as http versus https for application protocol?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/networking/service-protocols",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_75a1bd419af0ec82",
+      "question": "I'm writing a plugin to expose specialized hardware to containers and need to know which API version to target for my Kubernetes 1.24 cluster.",
+      "question_type": "scenario",
+      "source_doc_id": "reference/node/device-plugin-api-versions",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b352e32b61be4436",
+      "question": "My custom hardware plugin isn't being recognized by the kubelet and I'm wondering if there's an API version mismatch with my Kubernetes 1.26 cluster.",
+      "question_type": "scenario",
+      "source_doc_id": "reference/node/device-plugin-api-versions",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_cdb5c819038dc8bb",
+      "question": "I need to ensure my GPU and NIC are on the same NUMA node for performance reasons. How can I express this requirement?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/node/dra-standard-device-attributes",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_eb8204d8461552ca",
+      "question": "My workload requires two accelerators to communicate with minimal latency through PCIe. How do I request they share the same PCIe switch hierarchy?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/node/dra-standard-device-attributes",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_06aef1965b15a580",
+      "question": "What naming convention does the kubelet use for checkpoint archives?",
+      "question_type": "direct",
+      "source_doc_id": "reference/node/kubelet-checkpoint-api",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5e1346c557a1ea06",
+      "question": "What HTTP status code is returned if the CRI implementation does not support the checkpoint API?",
+      "question_type": "direct",
+      "source_doc_id": "reference/node/kubelet-checkpoint-api",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f67efc6927b540cc",
+      "question": "What kubelet command line argument configures the path to certificate files and private keys?",
+      "question_type": "direct",
+      "source_doc_id": "reference/node/kubelet-files",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_8e97bafdcfc4c6c7",
+      "question": "Where does the kubelet store the cpu_manager_state file by default?",
+      "question_type": "direct",
+      "source_doc_id": "reference/node/kubelet-files",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_68a93c31a1e5456c",
+      "question": "What gRPC error does the Kubelet Pods API return when pod sources have not finished initial synchronization?",
+      "question_type": "direct",
+      "source_doc_id": "reference/node/kubelet-pods-api",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c1a1ff1dbf50b837",
+      "question": "What is the default rate limit for ListPods and GetPod requests in queries per second?",
+      "question_type": "direct",
+      "source_doc_id": "reference/node/kubelet-pods-api",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_43a175bbf8cd3648",
+      "question": "How does the node agent periodically check if containers match their intended configuration?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/node/kubelet-sync-loop",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e2b61b1695515e05",
+      "question": "What causes delays between actual container state changes on a machine and what appears in the API server?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/node/kubelet-sync-loop",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5f9ba3ac3cc5ae89",
+      "question": "What information does the node-local gRPC endpoint expose about exclusive CPUs and memory assigned to an entire workload unit?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/node/pod-level-resource-managers",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_0fd95176deb63884",
+      "question": "How do I recover when the node agent fails to start after a version rollback due to incompatible state files?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/node/pod-level-resource-managers",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_48859f67b15eba57",
+      "question": "How can I limit which system calls a container is allowed to make to the Linux kernel?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/node/seccomp",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f037567abecbc6b5",
+      "question": "What are the different ways to restrict the kernel operations available to workloads running in my cluster?",
+      "question_type": "paraphrased",
+      "source_doc_id": "reference/node/seccomp",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5f49aa1a3249503c",
+      "question": "Where can I find both the Kubernetes enhancement proposal and its related issue for dockershim removal?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/node/topics-on-dockershim-and-cri-compatible-runtimes",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_09e158430cf213ea",
+      "question": "What resources are available for learning about migration from dockershim to containerd specifically?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/node/topics-on-dockershim-and-cri-compatible-runtimes",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_69a8ac8bc2100fb1",
+      "question": "Which kubeadm commands can accept a certificate key to enable automatic certificate copying when adding control-plane nodes?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/setup-tools/kubeadm/kubeadm-certs",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a5a3cefc8ca23056",
+      "question": "What outputs are generated when using kubeadm to create certificate signing requests for control-plane components?",
+      "question_type": "multi_hop",
+      "source_doc_id": "reference/setup-tools/kubeadm/kubeadm-certs",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_33c6de359de70bdb",
+      "question": "I need to generate all TLS certificates for my cluster before running the full bootstrap but I want to inspect them first. How can I create just the certificates?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/setup-tools/kubeadm/kubeadm-init-phase",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_09f1bbc8ec241c85",
+      "question": "I want to add more worker nodes to my cluster but I forgot the command they need to run. How do I retrieve the join command?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/setup-tools/kubeadm/kubeadm-init-phase",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_9b7201e55283ad04",
+      "question": "I want to manually configure some settings between steps when adding a node to my cluster. How can I run the join process one step at a time?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/setup-tools/kubeadm/kubeadm-join-phase",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_cdd11a84783da9bc",
+      "question": "I need to add a new control plane node to my existing cluster but want to customize parts of the setup. Can I break down the process into individual steps?",
+      "question_type": "scenario",
+      "source_doc_id": "reference/setup-tools/kubeadm/kubeadm-join-phase",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_9755583230d325cb",
+      "question": "What command shows changes that would be applied to static pod manifests before upgrading?",
+      "question_type": "direct",
+      "source_doc_id": "reference/setup-tools/kubeadm/kubeadm-upgrade",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f907a7f7768e2bfa",
+      "question": "Which kubeadm upgrade commands automatically renew kubeadm managed certificates in Kubernetes v1.15.0 and later?",
+      "question_type": "direct",
+      "source_doc_id": "reference/setup-tools/kubeadm/kubeadm-upgrade",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c7511c146917aa15",
+      "question": "Which organization maintains the officially-supported Kubernetes client libraries?",
+      "question_type": "direct",
+      "source_doc_id": "reference/using-api/client-libraries",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_108f59aec32d6242",
+      "question": "How do Kubernetes client libraries authenticate when the API client runs inside the cluster?",
+      "question_type": "direct",
+      "source_doc_id": "reference/using-api/client-libraries",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f527681d4762c2a8",
+      "question": "What flag can be used with the livez endpoint to specify the startup duration?",
+      "question_type": "direct",
+      "source_doc_id": "reference/using-api/health-checks",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_45215408ff6da08e",
+      "question": "What HTTP status code indicates the API server is healthy when checking the healthz endpoint?",
+      "question_type": "direct",
+      "source_doc_id": "reference/using-api/health-checks",
+      "source_section": "reference",
+      "language": "en"
+    },
+    {
+      "question_id": "q_97f332ad86eb0a12",
+      "question": "What should I do with namespaces that don't have any security configuration applied to them?",
+      "question_type": "paraphrased",
+      "source_doc_id": "setup/best-practices/enforcing-pod-security-standards",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_369824f18a0dbd24",
+      "question": "How can I collect information about containers that violate security policies without actually blocking them from running?",
+      "question_type": "paraphrased",
+      "source_doc_id": "setup/best-practices/enforcing-pod-security-standards",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_bb5cb6d25e2403d0",
+      "question": "How can I ensure my application's replicas are distributed across different failure domains to improve resilience?",
+      "question_type": "paraphrased",
+      "source_doc_id": "setup/best-practices/multiple-zones",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_20da925bf64e733b",
+      "question": "What happens when I create a persistent volume that's tied to a specific location - will my workload be scheduled correctly?",
+      "question_type": "paraphrased",
+      "source_doc_id": "setup/best-practices/multiple-zones",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_eb14a51d320068a0",
+      "question": "How do I verify that a machine meets the minimum requirements before adding it to my cluster?",
+      "question_type": "paraphrased",
+      "source_doc_id": "setup/best-practices/node-conformance",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b6614f43624624b1",
+      "question": "What software must be installed on a machine before I can run system verification tests on it?",
+      "question_type": "paraphrased",
+      "source_doc_id": "setup/best-practices/node-conformance",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_89c02f2e80d0e105",
+      "question": "What are the two methods available for applying configuration to the kubelet beyond the base KubeletConfiguration that applies cluster-wide?",
+      "question_type": "multi_hop",
+      "source_doc_id": "setup/production-environment/tools/kubeadm/control-plane-flags",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_0bc57c95643e1b64",
+      "question": "If I need to apply different flags to the same control plane component on different nodes and also handle duplicate flag definitions, which customization approach should I use?",
+      "question_type": "multi_hop",
+      "source_doc_id": "setup/production-environment/tools/kubeadm/control-plane-flags",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_11569f0d21f7f01a",
+      "question": "What system-level prerequisite must be enabled on each node before joining it to a dual-stack cluster?",
+      "question_type": "multi_hop",
+      "source_doc_id": "setup/production-environment/tools/kubeadm/dual-stack-support",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_437aaed8d23eeea7",
+      "question": "What limitation exists when upgrading an existing cluster to dual-stack using kubeadm upgrade?",
+      "question_type": "multi_hop",
+      "source_doc_id": "setup/production-environment/tools/kubeadm/dual-stack-support",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_0bcf262d3a9a8123",
+      "question": "I need to change the DNS resolver configuration file path on some of my nodes because they run different operating systems. How can I specify this per-node setting?",
+      "question_type": "scenario",
+      "source_doc_id": "setup/production-environment/tools/kubeadm/kubelet-integration",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_7ab844bca31f074a",
+      "question": "My container runtime uses a different cgroup driver than what the kubelet is configured with, causing health issues. How do I configure the kubelet to match the runtime's cgroup driver?",
+      "question_type": "scenario",
+      "source_doc_id": "setup/production-environment/tools/kubeadm/kubelet-integration",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_ca4e4dc526532aa2",
+      "question": "I need my control plane to survive single node failures but want etcd on dedicated hosts. What ports must be open between my etcd nodes?",
+      "question_type": "scenario",
+      "source_doc_id": "setup/production-environment/tools/kubeadm/setup-ha-etcd-with-kubeadm",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b077f434a854efc8",
+      "question": "My kubelet keeps trying to run containers but I need it to only manage etcd as a static pod. How do I configure this?",
+      "question_type": "scenario",
+      "source_doc_id": "setup/production-environment/tools/kubeadm/setup-ha-etcd-with-kubeadm",
+      "source_section": "setup",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f8e80ad5f35e4586",
+      "question": "What jsonpath expression extracts both initContainers and containers image fields from kubectl get pods output?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/access-application-cluster/list-all-running-container-images",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5febf8f19fd35dee",
+      "question": "Which kubectl flag filters pods by a specific label when listing container images?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/access-application-cluster/list-all-running-container-images",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c3e8554a2186d908",
+      "question": "What type of Service is created when using kubectl expose with the --type=NodePort flag?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/access-application-cluster/service-access-application-cluster",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_05d34722c0aa4dd2",
+      "question": "What selector does the kubectl expose command use when creating a Service from a Deployment?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/access-application-cluster/service-access-application-cluster",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c4681ca086b22b67",
+      "question": "What is the limitation of ReadWriteOnce access mode that allows multiple pods on the same node to write simultaneously?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/administer-cluster/change-pv-access-mode-readwriteoncepod",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c5f9ab62840c4cf1",
+      "question": "What must be set on spec.claimRef.uid before recreating a PersistentVolumeClaim during ReadWriteOncePod migration?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/administer-cluster/change-pv-access-mode-readwriteoncepod",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_73e9c4dc34a30e0e",
+      "question": "How do I activate experimental functionality that is not yet considered stable in my cluster?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/administer-cluster/configure-feature-gates",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_cc9f4358cde66d15",
+      "question": "What configuration changes are needed to turn on preview capabilities across the API server and node agent?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/administer-cluster/configure-feature-gates",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_7e0a9e26f90261b5",
+      "question": "How do I update the DNS server component in my Kubernetes cluster to a newer version?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/administer-cluster/coredns",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_4d85aa0807e072cd",
+      "question": "What configuration options can I adjust to reduce the memory and CPU usage of my cluster's name resolution service?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/administer-cluster/coredns",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_9e11ea6d1240ff55",
+      "question": "How can I ensure that latency-sensitive workloads stay on the same processor cores instead of moving around during execution?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/administer-cluster/cpu-management-policies",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_7b64edf1edbf8dd3",
+      "question": "What steps should I follow when switching between different processor allocation strategies on a node that is already running workloads?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/administer-cluster/cpu-management-policies",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_6a70f8a86fe4cd9f",
+      "question": "What configuration change and command must be executed to fully remove encryption from Secrets that are currently encrypted at rest?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/administer-cluster/decrypt-data",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_6e6e15d97aa35f09",
+      "question": "What are the prerequisites regarding etcd version and cluster setup for managing encryption of API data at rest?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/administer-cluster/decrypt-data",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_cf19f01922ae64e9",
+      "question": "What two steps are required to ensure your cloud package is properly registered when building an out-of-tree cloud-controller-manager?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/administer-cluster/developing-cloud-controller-manager",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_0a69ee4ae915b104",
+      "question": "Why does Kubernetes provide skeleton code with Go interfaces for cloud-controller-manager, and what method must cloud providers call to make their implementation available?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/administer-cluster/developing-cloud-controller-manager",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b937d2cfcdfe99f2",
+      "question": "I'm trying to expand my cluster capacity but the join command I saved from cluster creation isn't working anymore. How do I get a new one?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/administer-cluster/kubeadm/adding-linux-nodes",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_46c94132d3553744",
+      "question": "After adding several machines to my cluster, all CoreDNS pods are running on a single control plane node. How can I distribute them for better availability?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/administer-cluster/kubeadm/adding-linux-nodes",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f1550af3b067c87b",
+      "question": "My security team requires that node components cannot run with root privileges. How can I configure Kubernetes to meet this requirement?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/administer-cluster/kubelet-in-userns",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c08684a1e71cbb46",
+      "question": "I need to test a multi-node cluster on my laptop without requiring root access. What tools support this setup?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/administer-cluster/kubelet-in-userns",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_eda30bf9db5caa92",
+      "question": "What admission controller enforces LimitRange values for PersistentVolumeClaim requests?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/administer-cluster/limit-storage-consumption",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_9392234164deee55",
+      "question": "What two hard limits can ResourceQuota set to control PVC usage in a namespace?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/administer-cluster/limit-storage-consumption",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_ade479a816419147",
+      "question": "What command can detect pods mounting the Docker socket by checking hostPath volumes?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/administer-cluster/migrating-from-dockershim/migrating-telemetry-and-security-agents",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c6ae73f7a015111e",
+      "question": "Which monitor in SignalFx Smart Agent is affected by dockershim removal and should not be used with non-Docker runtimes?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/administer-cluster/migrating-from-dockershim/migrating-telemetry-and-security-agents",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_0caaa55112f6ee9f",
+      "question": "What DNS entry format is created when you create a Service in Kubernetes?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/administer-cluster/namespaces",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_9308eae3f1c7c78e",
+      "question": "Which namespace holds Lease objects associated with each node for kubelet heartbeats?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/administer-cluster/namespaces",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a463316b6f3f5df0",
+      "question": "How do I enable Pod-to-Pod traffic filtering rules when creating a Google Kubernetes Engine cluster?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/administer-cluster/network-policy-provider/calico-network-policy",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_42b48183d78c4725",
+      "question": "What command-line flag should I use to activate firewall rule enforcement between containers in my GKE setup?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/administer-cluster/network-policy-provider/calico-network-policy",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_8494747f00979c59",
+      "question": "How do I prevent application containers from using all available CPU and memory on a machine and starving the operating system processes?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/administer-cluster/reserve-compute-resources",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a3f7969cc73d3a06",
+      "question": "What configuration prevents workloads from consuming compute capacity needed by the container runtime and other infrastructure services?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/administer-cluster/reserve-compute-resources",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_1d66ee1032312c3c",
+      "question": "How do I ensure my applications stay available when I need to perform maintenance on a cluster machine?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/administer-cluster/safely-drain-node",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_aba934d7880b6b8a",
+      "question": "What command removes all workloads from a server before I take it offline for hardware repairs?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/administer-cluster/safely-drain-node",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_8f4f98647d4fc148",
+      "question": "What are the requirements for a namespaced sysctl to be classified as safe, and what happens to pods that try to use unsafe sysctls that haven't been enabled on their node?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/administer-cluster/sysctl-cluster",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_24b93d9e9944846c",
+      "question": "How does the kubelet's behavior with default sysctls differ when a pod uses host networking versus running in its own network namespace?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/administer-cluster/sysctl-cluster",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_891d45bf00e50743",
+      "question": "What are the two methods available for triggering foreground cascading deletion of a deployment in Kubernetes?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/administer-cluster/use-cascading-deletion",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_2eaeadc5c586844b",
+      "question": "What evidence can you observe to confirm that orphan deletion policy was applied versus background deletion policy?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/administer-cluster/use-cascading-deletion",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e1370baf0e65ac50",
+      "question": "I need to store database credentials in my cluster without manually base64 encoding them. How can I do this from files on my workstation?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/configmap-secret/managing-secret-using-kustomize",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e735569a9c9855ef",
+      "question": "I updated sensitive credentials in my configuration files but my pods are still using the old values. What am I missing?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/configmap-secret/managing-secret-using-kustomize",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_3df05940c7ad86a3",
+      "question": "My container keeps getting killed and restarting repeatedly with an OOMKilled status. How do I prevent it from consuming too much memory?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/configure-pod-container/assign-memory-resource",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_9db51877051ff9bb",
+      "question": "My pod stays in Pending state indefinitely and events show insufficient memory on nodes. What configuration should I adjust?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/configure-pod-container/assign-memory-resource",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_6c6d767f6387b6b2",
+      "question": "How do you add a label to a node using kubectl?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/configure-pod-container/assign-pods-nodes",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_8dcf3cc1fffcf18d",
+      "question": "What field in a pod configuration schedules a pod to a specific node by name?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/configure-pod-container/assign-pods-nodes",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5ef0e2886f3d00ae",
+      "question": "What does requiredDuringSchedulingIgnoredDuringExecution node affinity mean for pod scheduling?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/configure-pod-container/assign-pods-nodes-using-node-affinity",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_2163df9bbfa1e491",
+      "question": "How does preferredDuringSchedulingIgnoredDuringExecution node affinity differ from required node affinity?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/configure-pod-container/assign-pods-nodes-using-node-affinity",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_8756193eb9170a08",
+      "question": "Which volume types can be projected into a projected volume?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/configure-pod-container/configure-projected-volume-storage",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_3dca1f5142d764ec",
+      "question": "What command verifies that projected sources are mounted in the projected-volume directory?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/configure-pod-container/configure-projected-volume-storage",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_006c7c8bc5542da8",
+      "question": "How can I configure security policies for containers in a specific cluster partition using metadata annotations?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/configure-pod-container/enforce-standards-namespace-labels",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e7bf8a8b7d2e84a2",
+      "question": "What command shows me all cluster partitions that don't have mandatory security rules configured?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/configure-pod-container/enforce-standards-namespace-labels",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_54c5c980f6dad0b2",
+      "question": "How do I configure authentication credentials for downloading container images from a restricted repository that requires login?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/configure-pod-container/pull-image-private-registry",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b543dc74c063df95",
+      "question": "What's the process for accessing container images stored in a repository that isn't publicly available?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/configure-pod-container/pull-image-private-registry",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_19cc6db55ac39bf0",
+      "question": "How do I configure workloads that the node agent starts automatically from local files without using the control plane API?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/configure-pod-container/static-pod",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_8a91bf377844a31b",
+      "question": "What happens if I manually stop a container that was launched from a manifest file in a directory the node agent monitors?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/configure-pod-container/static-pod",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a6548f087481cd0c",
+      "question": "What are the differences in how temporary versus permanent node problems are exposed through the Kubernetes exporter?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/debug/debug-cluster/monitor-node-health",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_57600e7cf4dcafb3",
+      "question": "Which deployment methods allow you to customize the Node Problem Detector configuration using ConfigMap?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/debug/debug-cluster/monitor-node-health",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_cec62605d50cf2ed",
+      "question": "What configuration changes are needed if a Windows node behind a proxy has MAC spoofing enabled but pods still cannot reach external resources?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/debug/debug-cluster/windows",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_9a61bec03b46147b",
+      "question": "If flanneld is stuck waiting for network creation and a virtual adapter is not found when starting kubelet, what combination of troubleshooting steps should be taken?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/debug/debug-cluster/windows",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_95bd04a1f353022d",
+      "question": "I have different workload types that need different scheduling logic, but the built-in scheduler isn't meeting all my requirements. How can I run my own custom scheduling logic alongside the existing one?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/extend-kubernetes/configure-multiple-schedulers",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_1e6b3cc929395275",
+      "question": "Some of my pods need to be placed using specialized placement rules that the standard scheduler doesn't support. How do I tell those specific pods to use different scheduling logic?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/extend-kubernetes/configure-multiple-schedulers",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_2f3e652b84d8f714",
+      "question": "I need to pass different database connection strings to containers based on runtime conditions set during pod startup. How can I do this?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/inject-data-application/define-environment-variable-via-file",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_2bc0e7bba0f982a2",
+      "question": "My application container fails to start because it needs environment variables that are computed or generated when the pod initializes. What's the solution?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/inject-data-application/define-environment-variable-via-file",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a02757b705c46eba",
+      "question": "What syntax is used to reference another environment variable in the value field of env in a Pod configuration?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/inject-data-application/define-interdependent-environment-variables",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_aec23d799c7ea57a",
+      "question": "How do you escape the $(VAR_NAME) syntax to prevent environment variable expansion in Kubernetes?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/inject-data-application/define-interdependent-environment-variables",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a18d4ed3e08832ff",
+      "question": "What completion mode must be configured for Jobs to automatically set pod hostnames in the format ${jobName}-${completionIndex}?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/job/job-with-pod-to-pod-communication",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a83cf38c5e61cb95",
+      "question": "What value must clusterIP be set to when creating a headless Service for pod-to-pod communication in a Job?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/job/job-with-pod-to-pod-communication",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5ab4da6c05929fc7",
+      "question": "What label selector can be used with kubectl to filter Jobs that belong to the jobgroup jobexample?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/job/parallel-processing-expansion",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_07a765f6dcaecdc3",
+      "question": "What template language features allow a single YAML file to contain multiple Kubernetes manifests separated by a delimiter?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/job/parallel-processing-expansion",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_ffa69a839a280600",
+      "question": "How do I remove a running resource by specifying its definition in a YAML or JSON file?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/manage-kubernetes-objects/imperative-config",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f4f60408d467d26b",
+      "question": "What happens to fields that were modified directly on a live resource when I overwrite it from a stored file definition?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/manage-kubernetes-objects/imperative-config",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_913cbd6a1e4202c9",
+      "question": "How can I add more available addresses for cluster internal endpoints after my initial allocation is exhausted?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/network/extend-service-ip-ranges",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a5b4ef3e8ab5a933",
+      "question": "What happens when I try to remove an address range that still has active internal endpoints assigned from it?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/network/extend-service-ip-ranges",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_d62fd6ec7e859e47",
+      "question": "How can I verify that my cluster nodes are configured with both IPv4 and IPv6 network addresses?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/network/validate-dual-stack",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f63f6d566776b5bd",
+      "question": "What command shows me whether containers are receiving both types of IP addresses in a cluster that supports both protocols?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/network/validate-dual-stack",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c3bb7f56624c8158",
+      "question": "What risk arises when force deletion frees up a Pod name while the original Pod can still communicate with StatefulSet members?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/run-application/force-delete-stateful-set-pod",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_678a98fc9b1eab0c",
+      "question": "Why is setting TerminationGracePeriodSeconds to 0 unsafe for StatefulSet Pods given their typical use cases?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/run-application/force-delete-stateful-set-pod",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5e5ca37b8d749a84",
+      "question": "What commands would I use to first create a deployment from a YAML file and then verify how many pods are running in it?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/run-application/run-stateless-application-deployment",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_3389da158b2772cc",
+      "question": "If I want to change both the nginx version and the number of replicas for my deployment, what steps would I need to take?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tasks/run-application/run-stateless-application-deployment",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_b04416cd42cd6441",
+      "question": "My application is getting more traffic than expected and response times are slow. How can I add more pods to handle the load?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/run-application/scale-deployment",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_9f10f9fea2d9ad55",
+      "question": "I want to temporarily stop all pods for an application during a maintenance window without deleting the deployment. How do I do this?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/run-application/scale-deployment",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_7e7383ec4b2fff57",
+      "question": "I need to increase the number of database pods in my cluster to handle more traffic. How do I add more replicas?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/run-application/scale-stateful-set",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_617aafdc0f70897f",
+      "question": "I tried to reduce the number of pods but nothing happened and they're all still running. What could prevent this from working?",
+      "question_type": "scenario",
+      "source_doc_id": "tasks/run-application/scale-stateful-set",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_0cb102c2dcc42b50",
+      "question": "What argument does the kubelet process accept to automatically request a new certificate before expiration?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/tls/certificate-rotation",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_937c69831a87df6e",
+      "question": "At what percentage of remaining certificate lifetime will the kubelet automatically issue a new certificate signing request?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/tls/certificate-rotation",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_7c0db7e6576b3714",
+      "question": "What flags must be updated in the kube-controller-manager to include both old and new CA certificates?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/tls/manual-rotation-of-ca-certificates",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_96936abf553721eb",
+      "question": "Which files need to be distributed to all control plane nodes when manually rotating CA certificates?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/tls/manual-rotation-of-ca-certificates",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_50693b526aae288f",
+      "question": "What command generates the kubectl completion script for Bash?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/tools/included/optional-kubectl-configs-bash-linux",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_02eaff853648791f",
+      "question": "How can I verify that bash-completion is correctly installed on my system?",
+      "question_type": "direct",
+      "source_doc_id": "tasks/tools/included/optional-kubectl-configs-bash-linux",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_fae4cf1055cb69a6",
+      "question": "How can I check if my command-line tool is correctly set up to communicate with my container orchestration system?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/tools/included/verify-kubectl",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f52c4839426f2138",
+      "question": "What should I do if I get an error saying no authentication provider was found when trying to connect to my managed container platform?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/tools/included/verify-kubectl",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_adecaddeb29dc8fd",
+      "question": "What is the maximum version difference allowed between my command-line tool and the cluster it manages?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/tools/install-kubectl-windows",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_09d00bd2927a803d",
+      "question": "How do I verify that a downloaded binary file matches its expected checksum on Windows using PowerShell?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tasks/tools/install-kubectl-windows",
+      "source_section": "tasks",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5462066292b4c370",
+      "question": "How can I partition a cluster so different teams can work independently without seeing each other's resources?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tutorials/cluster-management/namespaces-walkthrough",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c807c8c959cb3603",
+      "question": "What's the way to isolate development workloads from production workloads on the same cluster?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tutorials/cluster-management/namespaces-walkthrough",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e9e9457e70a034b4",
+      "question": "What additional tool is required for encrypted swap that is not needed for unencrypted swap setup?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tutorials/cluster-management/provision-swap-memory",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5928c47ddc9b2380",
+      "question": "What steps must be completed after enabling swap on a node before pods can use swap memory?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tutorials/cluster-management/provision-swap-memory",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_fa3599810f2634d3",
+      "question": "Why does updating a ConfigMap with new Redis configuration values not immediately affect a running pod that mounts it?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tutorials/configuration/configure-redis-using-configmap",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_dc0cce20b5edc8b9",
+      "question": "What combination of volume configuration steps exposes ConfigMap data as a file inside a pod?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tutorials/configuration/configure-redis-using-configmap",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_89b5712b446f8264",
+      "question": "My Job Pods keep running forever because a helper container won't stop even after the main container completes. How can I fix this?",
+      "question_type": "scenario",
+      "source_doc_id": "tutorials/configuration/pod-sidecar-containers",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_ed84bca7ff8d9467",
+      "question": "I need a logging container to start before my application container begins running. How can I ensure the correct startup order?",
+      "question_type": "scenario",
+      "source_doc_id": "tutorials/configuration/pod-sidecar-containers",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_50b351bf7890f65b",
+      "question": "I deployed a container in my local cluster but I can't reach it from my browser. How do I expose it so I can access it from outside?",
+      "question_type": "scenario",
+      "source_doc_id": "tutorials/hello-minikube",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a6ce7224c7514d8f",
+      "question": "I want to see what my container is logging to stdout to debug why it's not responding. How can I check the logs?",
+      "question_type": "scenario",
+      "source_doc_id": "tutorials/hello-minikube",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f805035618db3786",
+      "question": "What agent runs on each node to manage the node and communicate with the Kubernetes control plane?",
+      "question_type": "direct",
+      "source_doc_id": "tutorials/kubernetes-basics/create-cluster/cluster-intro",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_96c25350345ae3b0",
+      "question": "Which API do node-level components use to communicate with the control plane?",
+      "question_type": "direct",
+      "source_doc_id": "tutorials/kubernetes-basics/create-cluster/cluster-intro",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_f83b2746ed7730fa",
+      "question": "What process is responsible for communication between the Kubernetes control plane and the Node?",
+      "question_type": "direct",
+      "source_doc_id": "tutorials/kubernetes-basics/explore/explore-intro",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_0889597aef6d81a6",
+      "question": "What kubectl subcommand prints the logs from a container in a pod?",
+      "question_type": "direct",
+      "source_doc_id": "tutorials/kubernetes-basics/explore/explore-intro",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_c60dfa6e84c8ae4c",
+      "question": "What kubectl command is used to change the number of replicas in a Deployment?",
+      "question_type": "direct",
+      "source_doc_id": "tutorials/kubernetes-basics/scale/scale-intro",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_e9df04a5865a5299",
+      "question": "What does the READY column show in kubectl get deployments output?",
+      "question_type": "direct",
+      "source_doc_id": "tutorials/kubernetes-basics/scale/scale-intro",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_adac00115eb040d8",
+      "question": "How do I upgrade my application to a new version in Kubernetes without causing any service interruption for users?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tutorials/kubernetes-basics/update/update-intro",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_a7e9bfc20c98249a",
+      "question": "What command should I use to revert my deployment back to a previous version after a failed upgrade?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tutorials/kubernetes-basics/update/update-intro",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_fb5edc609abc30fc",
+      "question": "How do I apply mandatory access control security policies to limit what processes inside my containers can do on the filesystem?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tutorials/security/apparmor",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_eb3808035e310348",
+      "question": "What happens when I try to start a pod with a security policy that hasn't been installed on the worker machine yet?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tutorials/security/apparmor",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_17837e2f9a989520",
+      "question": "How do I set up validation rules for container workloads within a specific project boundary?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tutorials/security/ns-level-pss",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_1839418211acb170",
+      "question": "What labels should I add to a workspace to enable security policy checks that block dangerous configurations?",
+      "question_type": "paraphrased",
+      "source_doc_id": "tutorials/security/ns-level-pss",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_d3fbf74ca969c9b4",
+      "question": "What is the relationship between the ready and serving conditions for endpoints that are terminating in Kubernetes?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tutorials/services/pods-and-endpoint-termination-flow",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_32344230c68557b1",
+      "question": "How can load balancers distinguish between endpoints that should not receive regular traffic versus endpoints where connection draining is appropriate during termination?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tutorials/services/pods-and-endpoint-termination-flow",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_330e12647ccbb503",
+      "question": "What resource requirements should Minikube be started with to successfully run a Cassandra StatefulSet with three replicas?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tutorials/stateful-application/cassandra",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_497ef22fa9aeb270",
+      "question": "What happens to the persistent volumes when you scale down or delete a Cassandra StatefulSet, and why is this behavior configured this way?",
+      "question_type": "multi_hop",
+      "source_doc_id": "tutorials/stateful-application/cassandra",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5f7d0b523264571a",
+      "question": "I need to run WordPress and MySQL on my cluster but the data must survive pod restarts and deletions. How do I ensure data persists?",
+      "question_type": "scenario",
+      "source_doc_id": "tutorials/stateful-application/mysql-wordpress-persistent-volume",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_194bcb9e0dda7c31",
+      "question": "After deploying my application with kubectl apply, I want to confirm that storage was successfully allocated. How can I check if volumes are bound?",
+      "question_type": "scenario",
+      "source_doc_id": "tutorials/stateful-application/mysql-wordpress-persistent-volume",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_762d60e95786a089",
+      "question": "I need to make my application accessible from outside the cluster but the Service shows external IP as pending, what should I do?",
+      "question_type": "scenario",
+      "source_doc_id": "tutorials/stateless-application/expose-external-ip-address",
+      "source_section": "tutorials",
+      "language": "en"
+    },
+    {
+      "question_id": "q_5a767b99414fcd91",
+      "question": "My deployment is running multiple pod replicas but external clients cannot reach them, how do I expose them to the internet?",
+      "question_type": "scenario",
+      "source_doc_id": "tutorials/stateless-application/expose-external-ip-address",
+      "source_section": "tutorials",
+      "language": "en"
+    }
+  ]
+}

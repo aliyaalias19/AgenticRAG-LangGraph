@@ -1,4 +1,4 @@
-.PHONY: install lint format typecheck test check ingest clean
+.PHONY: install lint format typecheck test check ingest generate-questions clean
 
 install:
 	uv sync --dev
@@ -20,6 +20,9 @@ check: lint format typecheck test
 
 ingest:
 	uv run agentic-rag ingest
+
+generate-questions:
+	uv run agentic-rag generate-questions
 
 clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache

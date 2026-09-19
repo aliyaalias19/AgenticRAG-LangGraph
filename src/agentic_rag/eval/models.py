@@ -37,3 +37,10 @@ class GenerationRun(BaseModel):
     input_tokens: int = Field(default=0, ge=0)
     output_tokens: int = Field(default=0, ge=0)
     random_seed: int
+
+
+class QuestionSet(BaseModel):
+    """A generated question set with its provenance."""
+
+    run: GenerationRun
+    questions: list[GeneratedQuestion] = Field(default_factory=list)
