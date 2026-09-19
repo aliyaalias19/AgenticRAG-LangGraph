@@ -3,10 +3,10 @@
 import json
 from pathlib import Path
 
-from agentic_rag.config.settings import Settings, get_settings
+from agentic_rag.config.settings import Settings, SourceSettings, get_settings
 from agentic_rag.ingest.chunker import chunk_documents
 from agentic_rag.ingest.loader import load_documents
-from agentic_rag.ingest.models import Chunk, CorpusManifest, Document
+from agentic_rag.ingest.models import Chunk, CorpusManifest, Document, SourceRecord
 from agentic_rag.ingest.repository import clone_or_update
 from agentic_rag.obs.logging import get_logger
 
@@ -45,15 +45,12 @@ def write_manifest(manifest: CorpusManifest, destination: Path) -> None:
 def build_manifest(
     documents: list[Document],
     chunks: list[Chunk],
-    commit_sha: str,
+    sources: list[SourceRecord],
     settings: Settings,
 ) -> CorpusManifest:
-    """Construct a provenance manifest for the given document set."""
+    """Construct a provenance manifest for the ingested corpus."""
     return CorpusManifest(
-        repo_url=settings.corpus.repo_url,
-        repo_ref=settings.corpus.repo_ref,
-        commit_sha=commit_sha,
-        docs_subpath=settings.corpus.docs_subpath,
+        sources=sources,
         document_count=len(documents),
         total_chars=sum(doc.char_count for doc in documents),
         min_document_chars=settings.corpus.min_document_chars,
@@ -64,28 +61,64 @@ def build_manifest(
     )
 
 
-def ingest_corpus(settings: Settings | None = None) -> CorpusManifest:
-    """Clone the source repository, load documents, and persist the corpus."""
-    settings = settings or get_settings()
-    settings.paths.ensure_exists()
+def ingest_source(
+    source: SourceSettings,
+    settings: Settings,
+) -> tuple[list[Document], SourceRecord]:
+    """Clone one source repository and load its documents."""
+    logger.info("source_ingestion_started", source=source.name)
 
-    logger.info("ingestion_started", repo_url=settings.corpus.repo_url)
-
-    repo_path = settings.paths.raw_dir / "source-repo"
+    repo_path = settings.paths.raw_dir / source.name
     commit_sha = clone_or_update(
-        repo_url=settings.corpus.repo_url,
-        ref=settings.corpus.repo_ref,
+        repo_url=source.repo_url,
+        ref=source.repo_ref,
         destination=repo_path,
     )
 
-    docs_root = repo_path / settings.corpus.docs_subpath
     documents = load_documents(
-        docs_root=docs_root,
+        docs_root=repo_path / source.docs_subpath,
         min_chars=settings.corpus.min_document_chars,
-        excluded_prefixes=settings.corpus.excluded_path_prefixes,
+        excluded_prefixes=source.excluded_path_prefixes,
+        source_name=source.name,
+        language=source.language,
     )
 
+    record = SourceRecord(
+        name=source.name,
+        repo_url=source.repo_url,
+        repo_ref=source.repo_ref,
+        commit_sha=commit_sha,
+        docs_subpath=source.docs_subpath,
+        language=source.language,
+        document_count=len(documents),
+    )
+
+    logger.info(
+        "source_ingestion_completed",
+        source=source.name,
+        language=source.language,
+        document_count=len(documents),
+    )
+    return documents, record
+
+
+def ingest_corpus(settings: Settings | None = None) -> CorpusManifest:
+    """Ingest every configured source into a single corpus."""
+    settings = settings or get_settings()
+    settings.paths.ensure_exists()
+
+    logger.info("ingestion_started", source_count=len(settings.corpus.sources))
+
+    documents: list[Document] = []
+    records: list[SourceRecord] = []
+
+    for source in settings.corpus.sources:
+        source_documents, record = ingest_source(source, settings)
+        documents.extend(source_documents)
+        records.append(record)
+
     write_corpus(documents, settings.paths.processed_dir / CORPUS_FILENAME)
+
     chunks = chunk_documents(
         documents,
         max_chars=settings.chunk.max_chars,
@@ -94,14 +127,14 @@ def ingest_corpus(settings: Settings | None = None) -> CorpusManifest:
         max_heading_depth=settings.chunk.max_heading_depth,
     )
     write_chunks(chunks, settings.paths.processed_dir / CHUNKS_FILENAME)
-    manifest = build_manifest(documents, chunks, commit_sha, settings)
+
+    manifest = build_manifest(documents, chunks, records, settings)
     write_manifest(manifest, settings.paths.processed_dir / MANIFEST_FILENAME)
 
     logger.info(
         "ingestion_completed",
         document_count=manifest.document_count,
         chunk_count=len(chunks),
-        total_chars=manifest.total_chars,
         corpus_hash=manifest.corpus_hash[:12],
     )
     return manifest
