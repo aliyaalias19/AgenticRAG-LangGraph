@@ -114,6 +114,29 @@ class LoggingSettings(BaseSettings):
         return value.upper() if isinstance(value, str) else value
 
 
+class LLMSettings(BaseSettings):
+    """Anthropic API client configuration."""
+
+    model_config = SettingsConfigDict(
+        env_prefix="LLM_",
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    model: str = Field(default="claude-sonnet-4-5-20250929")
+    max_tokens: int = Field(default=4096, gt=0)
+    max_retries: int = Field(default=5, ge=0)
+    initial_backoff_seconds: float = Field(default=2.0, gt=0)
+    max_concurrent_requests: int = Field(default=4, gt=0)
+    cache_enabled: bool = Field(default=True)
+    api_key: str = Field(
+        default="",
+        validation_alias="ANTHROPIC_API_KEY",
+        description="Anthropic API key",
+    )
+
+
 class Settings(BaseSettings):
     """Root configuration object aggregating all settings groups."""
 
@@ -130,6 +153,7 @@ class Settings(BaseSettings):
     corpus: CorpusSettings = Field(default_factory=CorpusSettings)
     chunk: ChunkSettings = Field(default_factory=ChunkSettings)
     logging: LoggingSettings = Field(default_factory=LoggingSettings)
+    llm: LLMSettings = Field(default_factory=LLMSettings)
 
 
 @lru_cache(maxsize=1)
