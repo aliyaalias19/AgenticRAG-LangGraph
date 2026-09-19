@@ -59,6 +59,8 @@ def load_documents(
     docs_root: Path,
     min_chars: int,
     excluded_prefixes: tuple[str, ...] = (),
+    source_name: str = "",
+    language: str = "en",
 ) -> list[Document]:
     """Load all eligible markdown documents beneath ``docs_root``."""
     if not docs_root.is_dir():
@@ -101,6 +103,8 @@ def load_documents(
                 char_count=len(content),
                 section_path=list(relative_path.parent.parts),
                 frontmatter=_string_metadata(post),
+                source_name=source_name,
+                language=language,
             )
         )
 

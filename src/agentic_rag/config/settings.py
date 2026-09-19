@@ -31,38 +31,53 @@ class PathSettings(BaseSettings):
             directory.mkdir(parents=True, exist_ok=True)
 
 
+class SourceSettings(BaseSettings):
+    """A single documentation source repository."""
+
+    model_config = SettingsConfigDict(extra="ignore")
+
+    name: str = Field(description="Short identifier, e.g. 'kubernetes'")
+    repo_url: str
+    repo_ref: str = Field(default="main")
+    docs_subpath: str
+    language: Literal["en", "zh"] = Field(default="en")
+    excluded_path_prefixes: tuple[str, ...] = Field(default=())
+
+
 class CorpusSettings(BaseSettings):
-    """Source and filtering rules for the document corpus."""
+    """Corpus-wide ingestion rules."""
 
     model_config = SettingsConfigDict(env_prefix="CORPUS_", extra="ignore")
 
-    repo_url: str = Field(default="https://github.com/kubernetes/website.git")
-    repo_ref: str = Field(default="main")
-    docs_subpath: str = Field(default="content/en/docs")
     min_document_chars: int = Field(default=200, ge=0)
-    excluded_path_prefixes: tuple[str, ...] = Field(
+    sources: tuple[SourceSettings, ...] = Field(
         default=(
-            "reference/kubernetes-api",
-            "reference/instrumentation/metrics",
-            "reference/command-line-tools-reference/feature-gates",
-            "test.md",
-        ),
-        description="Path prefixes excluded as auto-generated or stub content",
+            SourceSettings(
+                name="kubernetes",
+                repo_url="https://github.com/kubernetes/website.git",
+                docs_subpath="content/en/docs",
+                language="en",
+                excluded_path_prefixes=(
+                    "reference/kubernetes-api",
+                    "reference/instrumentation/metrics",
+                    "reference/command-line-tools-reference/feature-gates",
+                    "test",
+                ),
+            ),
+            SourceSettings(
+                name="kubernetes-zh",
+                repo_url="https://github.com/kubernetes/website.git",
+                docs_subpath="content/zh-cn/docs",
+                language="zh",
+                excluded_path_prefixes=(
+                    "reference/kubernetes-api",
+                    "reference/instrumentation/metrics",
+                    "reference/command-line-tools-reference/feature-gates",
+                    "test",
+                ),
+            ),
+        )
     )
-
-
-class LoggingSettings(BaseSettings):
-    """Structured logging configuration."""
-
-    model_config = SettingsConfigDict(env_prefix="LOG_", extra="ignore")
-
-    level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = Field(default="INFO")
-    json_output: bool = Field(default=False)
-
-    @field_validator("level", mode="before")
-    @classmethod
-    def uppercase_level(cls, value: str) -> str:
-        return value.upper() if isinstance(value, str) else value
 
 
 class ChunkSettings(BaseSettings):
@@ -85,6 +100,20 @@ class ChunkSettings(BaseSettings):
         return value
 
 
+class LoggingSettings(BaseSettings):
+    """Structured logging configuration."""
+
+    model_config = SettingsConfigDict(env_prefix="LOG_", extra="ignore")
+
+    level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = Field(default="INFO")
+    json_output: bool = Field(default=False)
+
+    @field_validator("level", mode="before")
+    @classmethod
+    def uppercase_level(cls, value: str) -> str:
+        return value.upper() if isinstance(value, str) else value
+
+
 class Settings(BaseSettings):
     """Root configuration object aggregating all settings groups."""
 
@@ -99,8 +128,8 @@ class Settings(BaseSettings):
 
     paths: PathSettings = Field(default_factory=PathSettings)
     corpus: CorpusSettings = Field(default_factory=CorpusSettings)
-    logging: LoggingSettings = Field(default_factory=LoggingSettings)
     chunk: ChunkSettings = Field(default_factory=ChunkSettings)
+    logging: LoggingSettings = Field(default_factory=LoggingSettings)
 
 
 @lru_cache(maxsize=1)

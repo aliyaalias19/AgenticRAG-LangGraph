@@ -165,6 +165,8 @@ def chunk_document(
                     char_count=len(text),
                     chunk_index=index,
                     section_path=list(document.section_path),
+                    source_name=document.source_name,
+                    language=document.language,
                 )
             )
             index += 1
