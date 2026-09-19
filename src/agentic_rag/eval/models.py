@@ -1,0 +1,39 @@
+"""Typed models for evaluation questions and sets."""
+
+import hashlib
+from datetime import UTC, datetime
+from typing import Literal
+
+from pydantic import BaseModel, Field
+
+QuestionType = Literal["direct", "paraphrased", "multi_hop", "scenario"]
+
+
+class GeneratedQuestion(BaseModel):
+    """A question produced by stage 1, before labelling or verification."""
+
+    question_id: str
+    question: str
+    question_type: QuestionType
+    source_doc_id: str
+    source_section: str
+    language: str = Field(default="en")
+
+    @staticmethod
+    def make_id(question: str, doc_id: str) -> str:
+        """Return a stable identifier derived from the question and its source."""
+        digest = hashlib.sha256(f"{doc_id}|{question}".encode()).hexdigest()
+        return f"q_{digest[:16]}"
+
+
+class GenerationRun(BaseModel):
+    """Provenance for one question-generation run."""
+
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    model: str
+    prompt_version: str
+    documents_sampled: int = Field(ge=0)
+    questions_generated: int = Field(ge=0)
+    input_tokens: int = Field(default=0, ge=0)
+    output_tokens: int = Field(default=0, ge=0)
+    random_seed: int

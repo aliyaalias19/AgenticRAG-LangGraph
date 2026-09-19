@@ -61,6 +61,8 @@ class CorpusSettings(BaseSettings):
                     "reference/kubernetes-api",
                     "reference/instrumentation/metrics",
                     "reference/command-line-tools-reference/feature-gates",
+                    "reference/kubectl/generated",
+                    "reference/setup-tools/kubeadm/generated",
                     "test",
                 ),
             ),
@@ -73,6 +75,8 @@ class CorpusSettings(BaseSettings):
                     "reference/kubernetes-api",
                     "reference/instrumentation/metrics",
                     "reference/command-line-tools-reference/feature-gates",
+                    "reference/kubectl/generated",
+                    "reference/setup-tools/kubeadm/generated",
                     "test",
                 ),
             ),
@@ -137,6 +141,31 @@ class LLMSettings(BaseSettings):
     )
 
 
+class EvalSettings(BaseSettings):
+    """Evaluation set generation parameters."""
+
+    model_config = SettingsConfigDict(
+        env_prefix="EVAL_",
+        env_file=PROJECT_ROOT / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    documents_to_sample: int = Field(default=150, gt=0)
+    questions_per_document: int = Field(default=2, gt=0)
+    min_document_chars: int = Field(default=1000, gt=0)
+    max_document_chars: int = Field(default=12000, gt=0)
+    section_weights: dict[str, float] = Field(
+        default={
+            "concepts": 0.30,
+            "tasks": 0.30,
+            "reference": 0.25,
+            "tutorials": 0.10,
+            "setup": 0.05,
+        }
+    )
+
+
 class Settings(BaseSettings):
     """Root configuration object aggregating all settings groups."""
 
@@ -154,6 +183,7 @@ class Settings(BaseSettings):
     chunk: ChunkSettings = Field(default_factory=ChunkSettings)
     logging: LoggingSettings = Field(default_factory=LoggingSettings)
     llm: LLMSettings = Field(default_factory=LLMSettings)
+    eval: EvalSettings = Field(default_factory=EvalSettings)
 
 
 @lru_cache(maxsize=1)
