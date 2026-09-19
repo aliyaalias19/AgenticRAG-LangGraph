@@ -44,7 +44,7 @@ def test_corpus_file_has_one_line_per_document(tmp_path: Path) -> None:
 
 def test_manifest_totals_match_documents() -> None:
     documents = [_make_doc("a", "alpha"), _make_doc("b", "beta")]
-    manifest = build_manifest(documents, commit_sha="abc123", settings=Settings())
+    manifest = build_manifest(documents, [], commit_sha="abc123", settings=Settings())
 
     assert manifest.document_count == 2
     assert manifest.total_chars == len("alpha") + len("beta")
@@ -52,7 +52,7 @@ def test_manifest_totals_match_documents() -> None:
 
 
 def test_manifest_is_written_as_readable_json(tmp_path: Path) -> None:
-    manifest = build_manifest([_make_doc("a", "alpha")], "abc123", Settings())
+    manifest = build_manifest([_make_doc("a", "alpha")], [], "abc123", Settings())
     path = tmp_path / "manifest.json"
 
     write_manifest(manifest, path)

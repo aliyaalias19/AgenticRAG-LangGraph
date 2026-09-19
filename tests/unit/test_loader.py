@@ -69,3 +69,17 @@ def test_ordering_is_deterministic(docs_root: Path) -> None:
 def test_missing_root_raises(tmp_path: Path) -> None:
     with pytest.raises(FileNotFoundError):
         load_documents(tmp_path / "nonexistent", min_chars=200)
+
+
+def test_clean_markdown_strips_shortcodes_and_comments() -> None:
+    from agentic_rag.ingest.loader import clean_markdown
+
+    raw = "<!-- overview -->\n\n{{% thirdparty-content %}}\n\nReal content here."
+    assert clean_markdown(raw) == "Real content here."
+
+
+def test_clean_markdown_keeps_text_inside_shortcodes() -> None:
+    from agentic_rag.ingest.loader import clean_markdown
+
+    raw = "{{< note >}}\nImportant detail.\n{{< /note >}}"
+    assert "Important detail." in clean_markdown(raw)

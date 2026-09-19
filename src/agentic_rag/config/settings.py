@@ -4,7 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, field_validator
+from pydantic import Field, ValidationInfo, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
@@ -45,6 +45,7 @@ class CorpusSettings(BaseSettings):
             "reference/kubernetes-api",
             "reference/instrumentation/metrics",
             "reference/command-line-tools-reference/feature-gates",
+            "test.md",
         ),
         description="Path prefixes excluded as auto-generated or stub content",
     )
@@ -64,6 +65,26 @@ class LoggingSettings(BaseSettings):
         return value.upper() if isinstance(value, str) else value
 
 
+class ChunkSettings(BaseSettings):
+    """Document chunking parameters."""
+
+    model_config = SettingsConfigDict(env_prefix="CHUNK_", extra="ignore")
+
+    max_chars: int = Field(default=1200, gt=0)
+    overlap_chars: int = Field(default=150, ge=0)
+    min_chars: int = Field(default=100, ge=0)
+    max_heading_depth: int = Field(default=3, ge=1, le=6)
+
+    @field_validator("overlap_chars")
+    @classmethod
+    def overlap_must_be_smaller_than_max(cls, value: int, info: ValidationInfo) -> int:
+        max_chars = info.data.get("max_chars")
+        if max_chars is not None and value >= max_chars:
+            message = "overlap_chars must be smaller than max_chars"
+            raise ValueError(message)
+        return value
+
+
 class Settings(BaseSettings):
     """Root configuration object aggregating all settings groups."""
 
@@ -79,6 +100,7 @@ class Settings(BaseSettings):
     paths: PathSettings = Field(default_factory=PathSettings)
     corpus: CorpusSettings = Field(default_factory=CorpusSettings)
     logging: LoggingSettings = Field(default_factory=LoggingSettings)
+    chunk: ChunkSettings = Field(default_factory=ChunkSettings)
 
 
 @lru_cache(maxsize=1)
