@@ -39,6 +39,9 @@ class CorpusManifest(BaseModel):
     total_chars: int = Field(ge=0)
     min_document_chars: int = Field(ge=0)
     corpus_hash: str = Field(description="SHA-256 over all sorted document hashes")
+    chunk_count: int = Field(default=0, ge=0)
+    chunk_max_chars: int = Field(default=0, ge=0)
+    chunk_overlap_chars: int = Field(default=0, ge=0)
 
     @staticmethod
     def compute_corpus_hash(documents: list[Document]) -> str:
@@ -47,3 +50,26 @@ class CorpusManifest(BaseModel):
         for doc_hash in sorted(d.content_hash for d in documents):
             digest.update(doc_hash.encode("utf-8"))
         return digest.hexdigest()
+
+
+class Chunk(BaseModel):
+    """A retrievable passage derived from a source document."""
+
+    chunk_id: str = Field(description="Stable identifier: '<doc_id>#<index>'")
+    doc_id: str = Field(description="Identifier of the parent document")
+    source_path: str = Field(description="Path of the parent document")
+    doc_title: str = Field(description="Title of the parent document")
+    heading_path: list[str] = Field(
+        default_factory=list,
+        description="Markdown heading hierarchy above this chunk",
+    )
+    content: str = Field(description="Chunk text without the context prefix")
+    char_count: int = Field(ge=0)
+    chunk_index: int = Field(ge=0, description="Position within the parent document")
+    section_path: list[str] = Field(default_factory=list)
+
+    @property
+    def contextual_text(self) -> str:
+        """Return the chunk text prefixed with its document and heading context."""
+        parts = [self.doc_title, *self.heading_path]
+        return f"{' > '.join(parts)}\n\n{self.content}"

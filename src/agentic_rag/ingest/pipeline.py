@@ -4,8 +4,9 @@ import json
 from pathlib import Path
 
 from agentic_rag.config.settings import Settings, get_settings
+from agentic_rag.ingest.chunker import chunk_documents
 from agentic_rag.ingest.loader import load_documents
-from agentic_rag.ingest.models import CorpusManifest, Document
+from agentic_rag.ingest.models import Chunk, CorpusManifest, Document
 from agentic_rag.ingest.repository import clone_or_update
 from agentic_rag.obs.logging import get_logger
 
@@ -13,6 +14,7 @@ logger = get_logger(__name__)
 
 CORPUS_FILENAME = "corpus.jsonl"
 MANIFEST_FILENAME = "manifest.json"
+CHUNKS_FILENAME = "chunks.jsonl"
 
 
 def write_corpus(documents: list[Document], destination: Path) -> None:
@@ -42,6 +44,7 @@ def write_manifest(manifest: CorpusManifest, destination: Path) -> None:
 
 def build_manifest(
     documents: list[Document],
+    chunks: list[Chunk],
     commit_sha: str,
     settings: Settings,
 ) -> CorpusManifest:
@@ -55,6 +58,9 @@ def build_manifest(
         total_chars=sum(doc.char_count for doc in documents),
         min_document_chars=settings.corpus.min_document_chars,
         corpus_hash=CorpusManifest.compute_corpus_hash(documents),
+        chunk_count=len(chunks),
+        chunk_max_chars=settings.chunk.max_chars,
+        chunk_overlap_chars=settings.chunk.overlap_chars,
     )
 
 
@@ -80,14 +86,37 @@ def ingest_corpus(settings: Settings | None = None) -> CorpusManifest:
     )
 
     write_corpus(documents, settings.paths.processed_dir / CORPUS_FILENAME)
-
-    manifest = build_manifest(documents, commit_sha, settings)
+    chunks = chunk_documents(
+        documents,
+        max_chars=settings.chunk.max_chars,
+        overlap_chars=settings.chunk.overlap_chars,
+        min_chars=settings.chunk.min_chars,
+        max_heading_depth=settings.chunk.max_heading_depth,
+    )
+    write_chunks(chunks, settings.paths.processed_dir / CHUNKS_FILENAME)
+    manifest = build_manifest(documents, chunks, commit_sha, settings)
     write_manifest(manifest, settings.paths.processed_dir / MANIFEST_FILENAME)
 
     logger.info(
         "ingestion_completed",
         document_count=manifest.document_count,
+        chunk_count=len(chunks),
         total_chars=manifest.total_chars,
         corpus_hash=manifest.corpus_hash[:12],
     )
     return manifest
+
+
+def write_chunks(chunks: list[Chunk], destination: Path) -> None:
+    """Write chunks to a JSON Lines file, one chunk per line."""
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    with destination.open("w", encoding="utf-8") as handle:
+        for chunk in chunks:
+            handle.write(chunk.model_dump_json() + "\n")
+    logger.info("chunks_written", path=str(destination), count=len(chunks))
+
+
+def read_chunks(source: Path) -> list[Chunk]:
+    """Read chunks from a JSON Lines file."""
+    with source.open("r", encoding="utf-8") as handle:
+        return [Chunk.model_validate_json(line) for line in handle if line.strip()]

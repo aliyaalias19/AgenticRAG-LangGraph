@@ -1,5 +1,6 @@
 """Load and filter markdown documents from a documentation tree."""
 
+import re
 from pathlib import Path
 
 import frontmatter
@@ -12,6 +13,16 @@ logger = get_logger(__name__)
 
 EXCLUDED_FILENAMES = frozenset({"_index.md", "_print"})
 EXCLUDED_DIR_NAMES = frozenset({"includes", "_print"})
+SHORTCODE_PATTERN = re.compile(r"\{\{[<%].*?[>%]\}\}", re.DOTALL)
+HTML_COMMENT_PATTERN = re.compile(r"<!--.*?-->", re.DOTALL)
+BLANK_LINES_PATTERN = re.compile(r"\n{3,}")
+
+
+def clean_markdown(text: str) -> str:
+    """Remove Hugo shortcodes, HTML comments, and excess blank lines."""
+    text = SHORTCODE_PATTERN.sub("", text)
+    text = HTML_COMMENT_PATTERN.sub("", text)
+    return BLANK_LINES_PATTERN.sub("\n\n", text).strip()
 
 
 def _is_excluded(
@@ -74,7 +85,7 @@ def load_documents(
             logger.warning("document_unparseable", path=str(path))
             continue
 
-        content = post.content.strip()
+        content = clean_markdown(post.content)
         if len(content) < min_chars:
             skipped_short += 1
             continue
