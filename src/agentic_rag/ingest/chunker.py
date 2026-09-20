@@ -158,6 +158,7 @@ def chunk_document(
                 Chunk(
                     chunk_id=f"{document.doc_id}#{index}",
                     doc_id=document.doc_id,
+                    relative_id=document.relative_id,
                     source_path=document.source_path,
                     doc_title=document.title,
                     heading_path=list(section.heading_path),

@@ -44,3 +44,28 @@ class QuestionSet(BaseModel):
 
     run: GenerationRun
     questions: list[GeneratedQuestion] = Field(default_factory=list)
+
+
+class LabelledQuestion(BaseModel):
+    """A question with its gold chunks identified."""
+
+    question_id: str
+    question: str
+    question_type: QuestionType
+    source_doc_id: str
+    source_section: str
+    language: str = Field(default="en")
+    gold_chunk_ids: list[str] = Field(default_factory=list)
+    labeller_reasoning: str = Field(default="")
+
+    @property
+    def is_answerable(self) -> bool:
+        """Return True when at least one supporting chunk was identified."""
+        return bool(self.gold_chunk_ids)
+
+
+class LabelledSet(BaseModel):
+    """A labelled question set with its provenance."""
+
+    run: GenerationRun
+    questions: list[LabelledQuestion] = Field(default_factory=list)

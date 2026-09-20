@@ -44,6 +44,7 @@ data/interim/
 *.duckdb
 qdrant_storage/
 data/llm_cache/
+data/evalsets/labelled_checkpoint.json
 
 # Results — keep committed plots, ignore bulky raw runs
 results/raw/

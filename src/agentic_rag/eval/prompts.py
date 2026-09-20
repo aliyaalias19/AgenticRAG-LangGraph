@@ -88,3 +88,37 @@ def build_generation_prompt(
         section=section,
         content=content,
     )
+
+
+LABELLING_SYSTEM = """\
+You identify which documentation passages contain the answer to a question.
+
+You are given a question and a numbered list of passages taken from a single \
+document. Decide which passages a reader would need in order to answer the \
+question correctly and completely.
+
+Be strict:
+- Include a passage only if it contains information required for the answer.
+- A passage that merely mentions the topic is not sufficient.
+- If no passage answers the question, return an empty list.
+- Most questions need one or two passages. Returning more than three means you \
+are probably including passages that merely relate to the topic.
+
+Return only valid JSON. No preamble, no markdown fences, no commentary.\
+"""
+
+LABELLING_TEMPLATE = """\
+Question: {question}
+
+Passages:
+{passages}
+
+Return JSON in exactly this shape:
+{{"passage_numbers": [1, 3], "reasoning": "one short sentence"}}\
+"""
+
+
+def build_labelling_prompt(question: str, passages: list[str]) -> str:
+    """Return the user prompt for labelling gold passages."""
+    numbered = "\n\n".join(f"[{index}]\n{text}" for index, text in enumerate(passages, start=1))
+    return LABELLING_TEMPLATE.format(question=question, passages=numbered)

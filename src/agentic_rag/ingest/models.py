@@ -10,6 +10,10 @@ class Document(BaseModel):
     """A single source document with its metadata and content."""
 
     doc_id: str = Field(description="Stable identifier derived from source path")
+    relative_id: str = Field(
+        default="",
+        description="Path-based identifier shared across language variants",
+    )
     source_path: str = Field(description="Path relative to the docs root")
     title: str = Field(description="Document title from frontmatter or filename")
     content: str = Field(description="Markdown body with frontmatter removed")
@@ -68,6 +72,7 @@ class Chunk(BaseModel):
 
     chunk_id: str = Field(description="Stable identifier: '<doc_id>#<index>'")
     doc_id: str = Field(description="Identifier of the parent document")
+    relative_id: str = Field(default="")
     source_path: str = Field(description="Path of the parent document")
     doc_title: str = Field(description="Title of the parent document")
     heading_path: list[str] = Field(
