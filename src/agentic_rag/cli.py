@@ -6,15 +6,19 @@ import sys
 from agentic_rag.config.settings import get_settings
 from agentic_rag.eval.generator import generate_questions
 from agentic_rag.eval.labeller import label_questions
-from agentic_rag.eval.models import LabelledSet, QuestionSet
+from agentic_rag.eval.models import LabelledSet, QuestionSet, VerifiedSet
 from agentic_rag.eval.sampling import sample_documents
 from agentic_rag.eval.storage import (
     LABELLED_FILENAME,
     QUESTIONS_FILENAME,
+    VERIFIED_FILENAME,
+    read_labelled_set,
     read_question_set,
     write_labelled_set,
     write_question_set,
+    write_verified_set,
 )
+from agentic_rag.eval.verifier import verify_questions
 from agentic_rag.ingest.pipeline import (
     CHUNKS_FILENAME,
     CORPUS_FILENAME,
@@ -35,6 +39,7 @@ def main(argv: list[str] | None = None) -> int:
     subparsers.add_parser("ingest", help="Clone and process the document corpus")
     subparsers.add_parser("generate-questions", help="Generate evaluation questions")
     subparsers.add_parser("label-questions", help="Identify gold chunks for questions")
+    subparsers.add_parser("verify-questions", help="Verify gold chunk labels")
 
     args = parser.parse_args(argv)
     configure_logging()
@@ -88,6 +93,22 @@ def main(argv: list[str] | None = None) -> int:
             settings.paths.evalsets_dir / LABELLED_FILENAME,
         )
         logger.info("label_questions_finished", count=len(labelled))
+        return 0
+
+    if args.command == "verify-questions":
+        settings = get_settings()
+
+        labelled_set = read_labelled_set(settings.paths.evalsets_dir / LABELLED_FILENAME)
+        chunks = read_chunks(settings.paths.processed_dir / CHUNKS_FILENAME)
+
+        client = LLMClient(settings=settings)
+        verified = verify_questions(labelled_set.questions, chunks, client)
+
+        write_verified_set(
+            VerifiedSet(run=labelled_set.run, questions=verified),
+            settings.paths.evalsets_dir / VERIFIED_FILENAME,
+        )
+        logger.info("verify_questions_finished", count=len(verified))
         return 0
 
     return 1

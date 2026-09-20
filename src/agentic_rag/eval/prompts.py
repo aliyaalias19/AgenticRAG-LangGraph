@@ -117,6 +117,34 @@ Return JSON in exactly this shape:
 {{"passage_numbers": [1, 3], "reasoning": "one short sentence"}}\
 """
 
+VERIFICATION_SYSTEM = """\
+You check whether a documentation passage answers a question.
+
+You are shown one question and one passage. Decide whether a reader could answer \
+the question using only this passage, or whether this passage supplies an \
+essential part of a multi-part answer.
+
+Answer "yes" only if the passage contains the required information. A passage \
+that discusses the same topic without containing the answer is "no".
+
+Return only valid JSON. No preamble, no markdown fences, no commentary.\
+"""
+
+VERIFICATION_TEMPLATE = """\
+Question: {question}
+
+Passage:
+{passage}
+
+Return JSON in exactly this shape:
+{{"supports": true, "reason": "one short sentence"}}\
+"""
+
+
+def build_verification_prompt(question: str, passage: str) -> str:
+    """Return the user prompt for verifying a single gold passage."""
+    return VERIFICATION_TEMPLATE.format(question=question, passage=passage)
+
 
 def build_labelling_prompt(question: str, passages: list[str]) -> str:
     """Return the user prompt for labelling gold passages."""

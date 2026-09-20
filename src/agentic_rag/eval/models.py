@@ -69,3 +69,29 @@ class LabelledSet(BaseModel):
 
     run: GenerationRun
     questions: list[LabelledQuestion] = Field(default_factory=list)
+
+
+class VerifiedQuestion(BaseModel):
+    """A question whose gold chunks have been independently verified."""
+
+    question_id: str
+    question: str
+    question_type: QuestionType
+    source_doc_id: str
+    source_section: str
+    language: str = Field(default="en")
+    gold_chunk_ids: list[str] = Field(default_factory=list)
+    rejected_chunk_ids: list[str] = Field(default_factory=list)
+    lexical_overlap: float = Field(default=0.0, ge=0.0, le=1.0)
+
+    @property
+    def is_answerable(self) -> bool:
+        """Return True when at least one verified supporting chunk remains."""
+        return bool(self.gold_chunk_ids)
+
+
+class VerifiedSet(BaseModel):
+    """A verified question set with its provenance."""
+
+    run: GenerationRun
+    questions: list[VerifiedQuestion] = Field(default_factory=list)
