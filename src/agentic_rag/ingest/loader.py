@@ -95,7 +95,8 @@ def load_documents(
         relative_path = path.relative_to(docs_root)
         documents.append(
             Document(
-                doc_id=str(relative_path.with_suffix("")),
+                doc_id=f"{source_name}:{relative_path.with_suffix('')}",
+                relative_id=str(relative_path.with_suffix("")),
                 source_path=str(relative_path),
                 title=_extract_title(post, path),
                 content=content,

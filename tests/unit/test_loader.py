@@ -33,30 +33,30 @@ def docs_root(tmp_path: Path) -> Path:
 
 
 def test_loads_eligible_documents_only(docs_root: Path) -> None:
-    documents = load_documents(docs_root, min_chars=200)
+    documents = load_documents(docs_root, min_chars=200, source_name="k8s")
     doc_ids = {doc.doc_id for doc in documents}
-    assert "concepts/pods" in doc_ids
-    assert "concepts/_index" not in doc_ids
-    assert "includes/snippet" not in doc_ids
-    assert "tasks/stub" not in doc_ids
+    assert "k8s:concepts/pods" in doc_ids
+    assert "k8s:concepts/_index" not in doc_ids
+    assert "k8s:includes/snippet" not in doc_ids
+    assert "k8s:tasks/stub" not in doc_ids
 
 
 def test_extracts_title_from_frontmatter(docs_root: Path) -> None:
-    documents = load_documents(docs_root, min_chars=200)
-    pods = next(doc for doc in documents if doc.doc_id == "concepts/pods")
+    documents = load_documents(docs_root, min_chars=200, source_name="k8s")
+    pods = next(doc for doc in documents if doc.doc_id == "k8s:concepts/pods")
     assert pods.title == "Pods"
     assert pods.frontmatter["title"] == "Pods"
 
 
 def test_falls_back_to_filename_for_title(docs_root: Path) -> None:
-    documents = load_documents(docs_root, min_chars=200)
-    doc = next(d for d in documents if d.doc_id == "tasks/no-title")
+    documents = load_documents(docs_root, min_chars=200, source_name="k8s")
+    doc = next(d for d in documents if d.doc_id == "k8s:tasks/no-title")
     assert doc.title == "No Title"
 
 
 def test_section_path_reflects_directory_hierarchy(docs_root: Path) -> None:
-    documents = load_documents(docs_root, min_chars=200)
-    pods = next(doc for doc in documents if doc.doc_id == "concepts/pods")
+    documents = load_documents(docs_root, min_chars=200, source_name="k8s")
+    pods = next(doc for doc in documents if doc.doc_id == "k8s:concepts/pods")
     assert pods.section_path == ["concepts"]
 
 
@@ -83,3 +83,14 @@ def test_clean_markdown_keeps_text_inside_shortcodes() -> None:
 
     raw = "{{< note >}}\nImportant detail.\n{{< /note >}}"
     assert "Important detail." in clean_markdown(raw)
+
+
+def test_relative_id_is_shared_across_sources(docs_root: Path) -> None:
+    english = load_documents(docs_root, min_chars=200, source_name="k8s")
+    chinese = load_documents(docs_root, min_chars=200, source_name="k8s-zh")
+
+    en_pods = next(d for d in english if d.relative_id == "concepts/pods")
+    zh_pods = next(d for d in chinese if d.relative_id == "concepts/pods")
+
+    assert en_pods.doc_id != zh_pods.doc_id
+    assert en_pods.relative_id == zh_pods.relative_id
