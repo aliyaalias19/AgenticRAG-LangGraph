@@ -1,0 +1,36 @@
+{
+  "base_model": "meta-llama/Llama-3.1-8B-Instruct",
+  "output_dir": "data/models/qlora",
+  "lora": {
+    "name": "r32_a64",
+    "rank": 32,
+    "alpha": 64,
+    "dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "scaling": 2.0
+  },
+  "learning_rate": 0.0002,
+  "epochs": 3,
+  "per_device_batch_size": 2,
+  "gradient_accumulation_steps": 8,
+  "max_sequence_length": 2048,
+  "warmup_ratio": 0.03,
+  "weight_decay": 0.0,
+  "lr_scheduler": "cosine",
+  "seed": 42,
+  "load_in_4bit": true,
+  "bnb_4bit_quant_type": "nf4",
+  "bnb_4bit_use_double_quant": true,
+  "bnb_4bit_compute_dtype": "bfloat16",
+  "gradient_checkpointing": true,
+  "eval_fraction": 0.1,
+  "effective_batch_size": 16
+}
