@@ -45,6 +45,7 @@ data/interim/
 qdrant_storage/
 data/llm_cache/
 data/evalsets/labelled_checkpoint.json
+data/models/
 
 # Results — keep committed plots, ignore bulky raw runs
 results/raw/
@@ -58,3 +59,4 @@ results/raw/
 # Logs
 *.log
 logs/
+data/models/
