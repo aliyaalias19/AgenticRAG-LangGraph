@@ -19,6 +19,7 @@ class PathSettings(BaseSettings):
     raw_dir: Path = Field(default=PROJECT_ROOT / "data" / "raw")
     processed_dir: Path = Field(default=PROJECT_ROOT / "data" / "processed")
     evalsets_dir: Path = Field(default=PROJECT_ROOT / "data" / "evalsets")
+    results_dir: Path = Field(default=PROJECT_ROOT / "data" / "results")
 
     def ensure_exists(self) -> None:
         """Create all configured directories if they do not exist."""
@@ -27,6 +28,7 @@ class PathSettings(BaseSettings):
             self.raw_dir,
             self.processed_dir,
             self.evalsets_dir,
+            self.results_dir,
         ):
             directory.mkdir(parents=True, exist_ok=True)
 
@@ -36,7 +38,7 @@ class SourceSettings(BaseSettings):
 
     model_config = SettingsConfigDict(extra="ignore")
 
-    name: str = Field(description="Short identifier, e.g. 'kubernetes'")
+    name: str
     repo_url: str
     repo_ref: str = Field(default="main")
     docs_subpath: str
@@ -119,26 +121,35 @@ class LoggingSettings(BaseSettings):
 
 
 class LLMSettings(BaseSettings):
-    """Anthropic API client configuration."""
+    """Language model provider configuration."""
 
     model_config = SettingsConfigDict(
         env_prefix="LLM_",
-        env_file=".env",
+        env_file=PROJECT_ROOT / ".env",
         env_file_encoding="utf-8",
         extra="ignore",
     )
 
+    provider: Literal["anthropic", "ollama", "openai", "bedrock", "vllm"] = Field(
+        default="anthropic"
+    )
     model: str = Field(default="claude-sonnet-4-5-20250929")
     max_tokens: int = Field(default=4096, gt=0)
     max_retries: int = Field(default=5, ge=0)
     initial_backoff_seconds: float = Field(default=2.0, gt=0)
     max_concurrent_requests: int = Field(default=4, gt=0)
     cache_enabled: bool = Field(default=True)
-    api_key: str = Field(
-        default="",
-        validation_alias="ANTHROPIC_API_KEY",
-        description="Anthropic API key",
-    )
+    api_key: str = Field(default="", validation_alias="ANTHROPIC_API_KEY")
+
+    ollama_base_url: str = Field(default="http://localhost:11434")
+    ollama_model: str = Field(default="qwen2.5:7b-instruct")
+    openai_base_url: str = Field(default="https://api.openai.com/v1")
+    openai_api_key: str = Field(default="", validation_alias="OPENAI_API_KEY")
+    openai_model: str = Field(default="gpt-4o-mini")
+    bedrock_region: str = Field(default="us-east-1")
+    bedrock_model: str = Field(default="anthropic.claude-3-5-sonnet-20241022-v2:0")
+    vllm_base_url: str = Field(default="http://localhost:8000/v1")
+    vllm_model: str = Field(default="k8s-assistant-awq")
 
 
 class EvalSettings(BaseSettings):
@@ -166,24 +177,6 @@ class EvalSettings(BaseSettings):
     )
 
 
-class EmbeddingSettings(BaseSettings):
-    """Embedding model configuration."""
-
-    model_config = SettingsConfigDict(
-        env_prefix="EMBED_",
-        env_file=PROJECT_ROOT / ".env",
-        env_file_encoding="utf-8",
-        extra="ignore",
-    )
-
-    model_name: str = Field(default="BAAI/bge-m3")
-    device: Literal["cpu", "cuda"] = Field(default="cpu")
-    use_fp16: bool = Field(default=False)
-    batch_size: int = Field(default=8, gt=0)
-    max_length: int = Field(default=1024, gt=0)
-    cache_dir: Path = Field(default=PROJECT_ROOT / "data" / "models")
-
-
 class VectorStoreSettings(BaseSettings):
     """Qdrant connection and collection configuration."""
 
@@ -204,11 +197,113 @@ class VectorStoreSettings(BaseSettings):
     timeout_seconds: int = Field(default=120, gt=0)
 
 
+class EmbeddingSettings(BaseSettings):
+    """Embedding model configuration."""
+
+    model_config = SettingsConfigDict(
+        env_prefix="EMBED_",
+        env_file=PROJECT_ROOT / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    model_name: str = Field(default="BAAI/bge-m3")
+    device: Literal["cpu", "cuda"] = Field(default="cpu")
+    use_fp16: bool = Field(default=False)
+    batch_size: int = Field(default=8, gt=0)
+    max_length: int = Field(default=1024, gt=0)
+    cache_dir: Path = Field(default=PROJECT_ROOT / "data" / "models")
+
+
+class RerankerSettings(BaseSettings):
+    """Cross-encoder reranker configuration."""
+
+    model_config = SettingsConfigDict(
+        env_prefix="RERANK_",
+        env_file=PROJECT_ROOT / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    model_name: str = Field(default="BAAI/bge-reranker-v2-m3")
+    device: Literal["cpu", "cuda"] = Field(default="cpu")
+    use_fp16: bool = Field(default=False)
+    batch_size: int = Field(default=16, gt=0)
+    candidate_pool: int = Field(default=50, gt=0)
+
+
+class RetrievalSettings(BaseSettings):
+    """Hybrid retrieval configuration."""
+
+    model_config = SettingsConfigDict(
+        env_prefix="RETRIEVAL_",
+        env_file=PROJECT_ROOT / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    dense_candidates: int = Field(default=50, gt=0)
+    sparse_candidates: int = Field(default=50, gt=0)
+    rrf_k: int = Field(default=60, gt=0)
+    dense_weight: float = Field(default=1.0, ge=0.0)
+    sparse_weight: float = Field(default=1.0, ge=0.0)
+    final_top_k: int = Field(default=10, gt=0)
+    use_reranker: bool = Field(default=True)
+
+
+class AgentSettings(BaseSettings):
+    """Agent graph execution parameters."""
+
+    model_config = SettingsConfigDict(
+        env_prefix="AGENT_",
+        env_file=PROJECT_ROOT / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    max_rewrites: int = Field(default=2, ge=0, le=5)
+    relevance_threshold: float = Field(default=0.5, ge=0.0, le=1.0)
+    min_relevant_chunks: int = Field(default=1, ge=1)
+    faithfulness_threshold: float = Field(default=0.6, ge=0.0, le=1.0)
+    max_context_chunks: int = Field(default=6, gt=0)
+    enable_verification: bool = Field(default=True)
+
+
+class SecuritySettings(BaseSettings):
+    """Tenant isolation and API authentication."""
+
+    model_config = SettingsConfigDict(
+        env_prefix="SECURITY_",
+        env_file=PROJECT_ROOT / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    default_tenant: str = Field(default="public")
+    api_keys: dict[str, str] = Field(
+        default={
+            "demo-public-key": "public",
+            "demo-internal-key": "internal",
+            "demo-restricted-key": "restricted",
+        },
+        description="Maps API key to tenant identifier",
+    )
+    tenant_sections: dict[str, tuple[str, ...]] = Field(
+        default={
+            "public": (),
+            "internal": ("concepts", "tasks", "tutorials"),
+            "restricted": ("setup", "reference"),
+        },
+        description="Empty tuple means all sections are visible",
+    )
+    audit_log_enabled: bool = Field(default=True)
+
+
 class Settings(BaseSettings):
     """Root configuration object aggregating all settings groups."""
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=PROJECT_ROOT / ".env",
         env_file_encoding="utf-8",
         extra="ignore",
     )
@@ -222,8 +317,12 @@ class Settings(BaseSettings):
     logging: LoggingSettings = Field(default_factory=LoggingSettings)
     llm: LLMSettings = Field(default_factory=LLMSettings)
     eval: EvalSettings = Field(default_factory=EvalSettings)
-    embedding: EmbeddingSettings = Field(default_factory=EmbeddingSettings)
     vector_store: VectorStoreSettings = Field(default_factory=VectorStoreSettings)
+    embedding: EmbeddingSettings = Field(default_factory=EmbeddingSettings)
+    reranker: RerankerSettings = Field(default_factory=RerankerSettings)
+    retrieval: RetrievalSettings = Field(default_factory=RetrievalSettings)
+    agent: AgentSettings = Field(default_factory=AgentSettings)
+    security: SecuritySettings = Field(default_factory=SecuritySettings)
 
 
 @lru_cache(maxsize=1)
