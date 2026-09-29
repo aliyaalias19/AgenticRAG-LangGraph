@@ -166,6 +166,44 @@ class EvalSettings(BaseSettings):
     )
 
 
+class EmbeddingSettings(BaseSettings):
+    """Embedding model configuration."""
+
+    model_config = SettingsConfigDict(
+        env_prefix="EMBED_",
+        env_file=PROJECT_ROOT / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    model_name: str = Field(default="BAAI/bge-m3")
+    device: Literal["cpu", "cuda"] = Field(default="cpu")
+    use_fp16: bool = Field(default=False)
+    batch_size: int = Field(default=8, gt=0)
+    max_length: int = Field(default=1024, gt=0)
+    cache_dir: Path = Field(default=PROJECT_ROOT / "data" / "models")
+
+
+class VectorStoreSettings(BaseSettings):
+    """Qdrant connection and collection configuration."""
+
+    model_config = SettingsConfigDict(
+        env_prefix="QDRANT_",
+        env_file=PROJECT_ROOT / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    host: str = Field(default="localhost")
+    http_port: int = Field(default=6333, gt=0)
+    grpc_port: int = Field(default=6334, gt=0)
+    prefer_grpc: bool = Field(default=True)
+    collection_name: str = Field(default="k8s_chunks")
+    dense_vector_size: int = Field(default=1024, gt=0)
+    upsert_batch_size: int = Field(default=128, gt=0)
+    timeout_seconds: int = Field(default=120, gt=0)
+
+
 class Settings(BaseSettings):
     """Root configuration object aggregating all settings groups."""
 
@@ -184,6 +222,8 @@ class Settings(BaseSettings):
     logging: LoggingSettings = Field(default_factory=LoggingSettings)
     llm: LLMSettings = Field(default_factory=LLMSettings)
     eval: EvalSettings = Field(default_factory=EvalSettings)
+    embedding: EmbeddingSettings = Field(default_factory=EmbeddingSettings)
+    vector_store: VectorStoreSettings = Field(default_factory=VectorStoreSettings)
 
 
 @lru_cache(maxsize=1)
