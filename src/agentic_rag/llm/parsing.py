@@ -5,6 +5,7 @@ import re
 from typing import Any
 
 FENCE_PATTERN = re.compile(r"^\s*```(?:json)?\s*|\s*```\s*$", re.MULTILINE)
+OBJECT_PATTERN = re.compile(r"\{.*\}", re.DOTALL)
 
 
 class ParseError(ValueError):
@@ -12,19 +13,31 @@ class ParseError(ValueError):
 
 
 def parse_json_object(text: str) -> dict[str, Any]:
-    """Parse a JSON object from a model response, tolerating markdown fences."""
+    """Parse a JSON object from a model response, tolerating stray prose.
+
+    Models occasionally wrap JSON in markdown fences or prefix it with a
+    sentence despite instructions. Recovering from that is cheaper than
+    discarding the call, so a fenced or embedded object is extracted before
+    the parse is treated as failed.
+    """
     cleaned = FENCE_PATTERN.sub("", text).strip()
 
     try:
         parsed = json.loads(cleaned)
-    except json.JSONDecodeError as error:
-        message = f"Response is not valid JSON: {error}"
-        raise ParseError(message) from error
+    except json.JSONDecodeError:
+        match = OBJECT_PATTERN.search(cleaned)
+        if match is None:
+            message = "Response contains no JSON object"
+            raise ParseError(message) from None
+        try:
+            parsed = json.loads(match.group(0))
+        except json.JSONDecodeError as error:
+            message = f"Response is not valid JSON: {error}"
+            raise ParseError(message) from error
 
     if not isinstance(parsed, dict):
         message = f"Expected a JSON object, got {type(parsed).__name__}"
         raise ParseError(message)
-
     return parsed
 
 
@@ -45,5 +58,15 @@ def parse_string_list(text: str, key: str) -> list[str]:
     if not items:
         message = f"No non-empty strings found at {key!r}"
         raise ParseError(message)
-
     return items
+
+
+def clamp(value: Any, low: float = 0.0, high: float = 1.0, default: float = 0.0) -> float:
+    """Return ``value`` as a float clamped to [low, high], or ``default``."""
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return default
+    if number != number:  # NaN
+        return default
+    return max(low, min(high, number))
