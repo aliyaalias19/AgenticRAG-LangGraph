@@ -13,10 +13,7 @@ _configured = False
 
 
 def configure_logging(*, force: bool = False) -> None:
-    """Configure structlog and the stdlib logging bridge.
-
-    Idempotent: repeated calls are no-ops unless ``force`` is set.
-    """
+    """Configure structlog and the stdlib logging bridge."""
     global _configured
     if _configured and not force:
         return
@@ -39,11 +36,7 @@ def configure_logging(*, force: bool = False) -> None:
     )
 
     structlog.configure(
-        processors=[
-            *shared_processors,
-            structlog.processors.format_exc_info,
-            renderer,
-        ],
+        processors=[*shared_processors, structlog.processors.format_exc_info, renderer],
         wrapper_class=structlog.make_filtering_bound_logger(
             logging.getLevelName(settings.logging.level)
         ),
@@ -51,12 +44,7 @@ def configure_logging(*, force: bool = False) -> None:
         cache_logger_on_first_use=True,
     )
 
-    logging.basicConfig(
-        format="%(message)s",
-        stream=sys.stdout,
-        level=settings.logging.level,
-    )
-
+    logging.basicConfig(format="%(message)s", stream=sys.stdout, level=settings.logging.level)
     _configured = True
 
 
