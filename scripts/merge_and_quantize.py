@@ -23,6 +23,9 @@ from agentic_rag.obs.logging import configure_logging, get_logger
 
 logger = get_logger(__name__)
 
+CALIBRATION_FILENAME = "awq_calibration.jsonl"
+CALIBRATION_SAMPLES = 256
+
 
 def merge_adapter(base_model: str, adapter_dir: Path, output_dir: Path) -> None:
     """Merge LoRA weights into the base model and save in fp16."""
@@ -120,7 +123,26 @@ def main(argv: list[str] | None = None) -> int:
     if not args.skip_merge:
         merge_adapter(args.base_model, args.adapter, args.merged)
     if not args.skip_quantize:
-        quantize_awq(args.merged, args.awq, args.calibration, args.group_size)
+        calibration = args.calibration
+        if calibration is None:
+            # AutoAWQ rejects calib_data=None, so an unset flag has to resolve
+            # to a real file rather than fall through as None. Calibrating on
+            # the training data rather than a generic web corpus matters: AWQ
+            # derives activation scales from whatever text it is given, so the
+            # closer that text is to what the model will serve, the better the
+            # quantisation holds up.
+            from agentic_rag.config.settings import get_settings
+            from agentic_rag.train.dataset import TRAIN_FILENAME
+
+            settings = get_settings()
+            calibration = settings.paths.processed_dir / CALIBRATION_FILENAME
+            if not calibration.is_file():
+                build_calibration_set(
+                    settings.paths.evalsets_dir / TRAIN_FILENAME,
+                    calibration,
+                    CALIBRATION_SAMPLES,
+                )
+        quantize_awq(args.merged, args.awq, calibration, args.group_size)
     return 0
 
 
