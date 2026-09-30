@@ -1,0 +1,55 @@
+{
+  "levels": [
+    {
+      "label": "c1",
+      "concurrency": 1,
+      "input_tokens": 630,
+      "max_output_tokens": 256,
+      "requests": 24,
+      "failures": 0,
+      "wall_seconds": 15.2946,
+      "ttft_p50": 0.077,
+      "ttft_p95": 0.0863,
+      "ttft_p99": 0.0942,
+      "itl_p50": 0.0105,
+      "itl_p95": 0.0107,
+      "output_tokens_per_second_per_stream": 95.5915,
+      "aggregate_output_tokens_per_second": 85.9126,
+      "requests_per_second": 1.5692
+    },
+    {
+      "label": "c4",
+      "concurrency": 4,
+      "input_tokens": 630,
+      "max_output_tokens": 256,
+      "requests": 24,
+      "failures": 0,
+      "wall_seconds": 4.3771,
+      "ttft_p50": 0.0867,
+      "ttft_p95": 0.1583,
+      "ttft_p99": 0.1589,
+      "itl_p50": 0.0109,
+      "itl_p95": 0.0116,
+      "output_tokens_per_second_per_stream": 91.5028,
+      "aggregate_output_tokens_per_second": 308.1914,
+      "requests_per_second": 5.483
+    },
+    {
+      "label": "c16",
+      "concurrency": 16,
+      "input_tokens": 630,
+      "max_output_tokens": 256,
+      "requests": 24,
+      "failures": 0,
+      "wall_seconds": 2.0322,
+      "ttft_p50": 0.3918,
+      "ttft_p95": 0.4195,
+      "ttft_p99": 0.4447,
+      "itl_p50": 0.013,
+      "itl_p95": 0.0148,
+      "output_tokens_per_second_per_stream": 77.7152,
+      "aggregate_output_tokens_per_second": 701.703,
+      "requests_per_second": 11.8099
+    }
+  ]
+}

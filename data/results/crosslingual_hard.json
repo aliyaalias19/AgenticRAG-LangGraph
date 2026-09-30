@@ -1,0 +1,40 @@
+{
+  "pairs": 598,
+  "top_k": 10,
+  "query_chars": 150,
+  "title_in_query": false,
+  "directions": {
+    "zh->en": {
+      "dense": {
+        "queries": 598,
+        "recall@1": 0.9415,
+        "recall@5": 0.995,
+        "recall@10": 0.9967,
+        "mrr": 0.965
+      },
+      "bm25": {
+        "queries": 598,
+        "recall@1": 0.6054,
+        "recall@5": 0.8177,
+        "recall@10": 0.8629,
+        "mrr": 0.6936
+      }
+    },
+    "en->zh": {
+      "dense": {
+        "queries": 598,
+        "recall@1": 0.8094,
+        "recall@5": 0.9431,
+        "recall@10": 0.9615,
+        "mrr": 0.8678
+      },
+      "bm25": {
+        "queries": 598,
+        "recall@1": 0.2977,
+        "recall@5": 0.5167,
+        "recall@10": 0.6037,
+        "mrr": 0.3916
+      }
+    }
+  }
+}
