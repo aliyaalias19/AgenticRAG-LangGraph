@@ -16,6 +16,7 @@ import json
 import sys
 from pathlib import Path
 
+from agentic_rag.config.settings import get_settings
 from agentic_rag.obs.logging import configure_logging, get_logger
 from agentic_rag.serving.benchmark import BenchmarkSuite, run_level
 
@@ -86,8 +87,11 @@ async def run_sweep(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--base-url", default="http://localhost:8000/v1")
-    parser.add_argument("--model", default="data/models/awq")
+    # Defaults come from settings so the benchmark and the serving layer cannot
+    # disagree about the endpoint. The served model name is what vLLM registers,
+    # which is not the same as the path the weights were loaded from.
+    parser.add_argument("--base-url", default=None)
+    parser.add_argument("--model", default=None)
     parser.add_argument("--concurrency", type=int, nargs="+", default=[1, 2, 4, 8, 16])
     parser.add_argument("--requests", type=int, default=32)
     parser.add_argument("--max-output-tokens", type=int, default=256)
@@ -96,10 +100,16 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     configure_logging()
+    settings = get_settings()
+    # An unset flag means "use the configured endpoint", not a hardcoded path.
+    # The served model name is what vLLM registers and is not the directory the
+    # weights were loaded from; defaulting to the path produces a silent 404.
+    base_url = args.base_url or settings.llm.vllm_base_url
+    model = args.model or settings.llm.vllm_model
     suite = asyncio.run(
         run_sweep(
-            args.base_url,
-            args.model,
+            base_url,
+            model,
             args.concurrency,
             args.requests,
             args.max_output_tokens,
