@@ -1,103 +1,73 @@
-"""Cross-lingual retrieval evaluation over parallel EN/ZH documentation.
-
-The corpus contains 598 documents that exist in both languages under the same
-relative_id. That is hand-aligned parallel data: a passage and its translation
-are, by construction, about the same thing. So a passage in one language makes
-a legitimate query whose correct answer is the document with the same
-relative_id in the other language -- ground truth with no labelling required.
+"""Measure cross-lingual retrieval over parallel EN/ZH documentation.
 
 Dense and lexical retrieval are scored on identical queries. BM25 is expected
-to fail: Chinese and English share no content vocabulary, only identifiers and
-command names. Quantifying that gap is the point.
+to do badly: Chinese and English share no content vocabulary. It does not do
+as badly as that suggests, because technical documentation is partially
+parallel at the token level -- identifiers, flags and command names survive
+translation untouched. Quantifying that gap, and its direction, is the point.
+
+    python scripts/eval_crosslingual.py --no-title --query-chars 150
 """
 
 import argparse
-import collections
 import json
+import pickle
 import random
+import sys
 from pathlib import Path
 
 from qdrant_client import QdrantClient
 from qdrant_client.models import FieldCondition, Filter, MatchValue
 
-CHUNKS = Path("data/processed/chunks.jsonl")
-BM25_INDEX = Path("data/processed/bm25_index.pkl")
-QUERY_CHARS = 400
+from agentic_rag.config.settings import get_settings
+from agentic_rag.eval.crosslingual import (
+    DEFAULT_QUERY_CHARS,
+    load_pairs,
+    make_query,
+    rank_of,
+    summarise,
+)
+from agentic_rag.obs.logging import configure_logging, get_logger
+from agentic_rag.retrieval.bm25 import INDEX_FILENAME
+
+logger = get_logger(__name__)
+
+CHUNKS_FILENAME = "chunks.jsonl"
 
 
-def load_pairs():
-    rows = [json.loads(line) for line in CHUNKS.open(encoding="utf-8") if line.strip()]
-    by_key = collections.defaultdict(list)
-    for row in rows:
-        by_key[(row["relative_id"], row["language"])].append(row)
-
-    relatives = collections.defaultdict(set)
-    for relative_id, language in by_key:
-        relatives[relative_id].add(language)
-
-    pairs = []
-    for relative_id, languages in relatives.items():
-        if {"en", "zh"} <= languages:
-            en = by_key[(relative_id, "en")][0]
-            zh = by_key[(relative_id, "zh")][0]
-            pairs.append((relative_id, en, zh))
-    pairs.sort(key=lambda p: p[0])
-    return pairs
-
-
-def make_query(chunk, chars, use_title):
-    text = f"{chunk['doc_title']}\n{chunk['content']}" if use_title else chunk["content"]
-    return text[:chars]
-
-
-def rank_of(results, relative_id):
-    for position, payload in enumerate(results, start=1):
-        if payload.get("relative_id") == relative_id:
-            return position
-    return None
-
-
-def summarise(ranks, total):
-    found = [r for r in ranks if r is not None]
-    return {
-        "queries": total,
-        "recall@1": round(sum(1 for r in found if r <= 1) / total, 4),
-        "recall@5": round(sum(1 for r in found if r <= 5) / total, 4),
-        "recall@10": round(sum(1 for r in found if r <= 10) / total, 4),
-        "mrr": round(sum(1.0 / r for r in found) / total, 4),
-    }
-
-
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--limit", type=int, default=0, help="0 = all pairs")
+    parser.add_argument("--limit", type=int, default=0, help="0 evaluates every pair")
     parser.add_argument("--top-k", type=int, default=10)
-    parser.add_argument("--query-chars", type=int, default=QUERY_CHARS)
-    parser.add_argument("--no-title", action="store_true", help="exclude doc_title from the query")
+    parser.add_argument("--query-chars", type=int, default=DEFAULT_QUERY_CHARS)
+    parser.add_argument("--no-title", action="store_true", help="omit doc_title from the query")
     parser.add_argument("--output", type=Path, default=Path("data/results/crosslingual_eval.json"))
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    pairs = load_pairs()
+    configure_logging()
+    settings = get_settings()
+
+    pairs = load_pairs(settings.paths.processed_dir / CHUNKS_FILENAME)
     if args.limit:
-        random.Random(42).shuffle(pairs)  # noqa: S311 - reproducibility, not cryptography
-        pairs = pairs[: args.limit]
-        pairs.sort(key=lambda p: p[0])
-    print(f"parallel document pairs: {len(pairs)}")
+        random.Random(settings.random_seed).shuffle(pairs)  # noqa: S311 - reproducibility
+        pairs = sorted(pairs[: args.limit], key=lambda pair: pair.relative_id)
+    logger.info("crosslingual_pairs_loaded", pairs=len(pairs))
 
     from FlagEmbedding import BGEM3FlagModel
 
-    model = BGEM3FlagModel("BAAI/bge-m3", use_fp16=True)
-    client = QdrantClient(host="localhost", port=6333, timeout=120)
+    model = BGEM3FlagModel(settings.embedding.model_name, use_fp16=settings.embedding.use_fp16)
+    client = QdrantClient(
+        host=settings.vector_store.host,
+        port=settings.vector_store.http_port,
+        timeout=settings.vector_store.timeout_seconds,
+    )
 
-    try:
-        import pickle
-
-        with BM25_INDEX.open("rb") as handle:
+    bm25_path = settings.paths.processed_dir / INDEX_FILENAME
+    bm25 = None
+    if bm25_path.is_file():
+        with bm25_path.open("rb") as handle:
             bm25 = pickle.load(handle)  # noqa: S301 - our own build artefact
-        print(f"bm25 index loaded: {bm25.size} documents")
-    except Exception as exc:
-        print(f"bm25 unavailable ({exc}); dense only")
-        bm25 = None
+        logger.info("bm25_index_loaded", documents=bm25.size)
 
     report = {
         "pairs": len(pairs),
@@ -107,18 +77,21 @@ def main() -> int:
         "directions": {},
     }
 
-    for source_lang, target_lang in (("zh", "en"), ("en", "zh")):
-        label = f"{source_lang}->{target_lang}"
-        queries, truths = [], []
-        for relative_id, en, zh in pairs:
-            queries.append(
-                make_query(zh if source_lang == "zh" else en, args.query_chars, not args.no_title)
+    for source, target in (("zh", "en"), ("en", "zh")):
+        label = f"{source}->{target}"
+        queries = [
+            make_query(
+                pair.second if source == "zh" else pair.first,
+                args.query_chars,
+                not args.no_title,
             )
-            truths.append(relative_id)
+            for pair in pairs
+        ]
+        truths = [pair.relative_id for pair in pairs]
 
-        encoded = model.encode(
+        vectors = model.encode(
             queries,
-            batch_size=32,
+            batch_size=settings.embedding.batch_size * 4,
             max_length=512,
             return_dense=True,
             return_sparse=False,
@@ -126,27 +99,26 @@ def main() -> int:
         )["dense_vecs"]
 
         language_filter = Filter(
-            must=[FieldCondition(key="language", match=MatchValue(value=target_lang))]
+            must=[FieldCondition(key="language", match=MatchValue(value=target))]
         )
 
-        dense_ranks, bm25_ranks = [], []
-        for vector, relative_id, query in zip(encoded, truths, queries, strict=True):
+        dense_ranks: list[int | None] = []
+        bm25_ranks: list[int | None] = []
+        for vector, relative_id, query in zip(vectors, truths, queries, strict=True):
             hits = client.query_points(
-                collection_name="k8s_chunks",
+                collection_name=settings.vector_store.collection_name,
                 query=vector.tolist(),
                 using="dense",
                 limit=args.top_k,
                 query_filter=language_filter,
                 with_payload=True,
             ).points
-            dense_ranks.append(rank_of([h.payload for h in hits], relative_id))
+            dense_ranks.append(rank_of([hit.payload for hit in hits], relative_id))
 
             if bm25 is not None:
-                lexical = bm25.search(
-                    query, limit=args.top_k, tenant="public", language=target_lang
-                )
+                lexical = bm25.search(query, limit=args.top_k, tenant="public", language=target)
                 bm25_ranks.append(
-                    rank_of([{"relative_id": h.relative_id} for h in lexical], relative_id)
+                    rank_of([{"relative_id": hit.relative_id} for hit in lexical], relative_id)
                 )
 
         report["directions"][label] = {"dense": summarise(dense_ranks, len(pairs))}
@@ -161,10 +133,12 @@ def main() -> int:
             )
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
+    args.output.write_text(
+        json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
     print(f"\nwritten to {args.output}")
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    sys.exit(main())

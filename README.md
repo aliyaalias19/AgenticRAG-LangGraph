@@ -203,7 +203,7 @@ make bench                               # TTFT, ITL, throughput
 ## Development
 
 ```bash
-make check     # ruff, mypy strict, 297 tests
+make check     # ruff, mypy strict, 310 tests
 make test
 ```
 
