@@ -110,3 +110,73 @@ Measured 1.60 s/chunk at `max_length=256` on 4 WSL threads — 6.7 hours, and
 that truncates longer chunks. `max_length` 512 and 1024 were within 3% of
 each other, so padding was not the bottleneck; the model is simply large for
 CPU inference. Rent a T4 for ten minutes instead and cache the vectors.
+
+## A library upgrade can silently move training to the CPU
+
+Installing the training stack pulled torch 2.14 built against CUDA 13.0. The
+pod's driver was 12.8, so `torch.cuda.is_available()` returned `False` — and
+nothing crashed. Training would have run on the CPU at roughly a thirtieth of
+the speed, and the only symptom would have been the clock.
+
+Worse, the parent process reported `cuda: True` while the worker process
+failed, because a CUDA context is only really created where the work happens.
+
+Any `pip install` that touches torch is now followed by an explicit assertion
+that CUDA is still available, in the process that will use it.
+
+## Quantising and serving could not share one environment
+
+AutoAWQ was deprecated during this project, and its last tested combination
+was transformers 4.51.3. vLLM 0.11 needs transformers ≥ 4.56 for its tokenizer
+backend. Those two requirements cannot be satisfied at once.
+
+The workaround was pinning down for quantisation and back up for serving. The
+real answer is that these are different stages and belong in different
+containers, which is why production ML pipelines look the way they do.
+
+## The AWQ kernel was worth 6.5× more than anything else tried
+
+Serving the quantised model with the default AWQ GEMM kernel gave 14.8 tok/s
+per stream on an A40. Switching to `--quantization awq_marlin` gave 95.6 —
+same weights, same hardware, one flag. GEMM dequantises in a layout that
+starves the tensor cores at batch size 1; Marlin repacks for the access
+pattern the hardware wants.
+
+Throughput problems are worth profiling before they are worth re-architecting.
+
+## An open-book evaluation cannot measure fine-tuning
+
+The MCQ evaluation supplied the source passages alongside the question. The
+base instruct model scored 96.4% on it, which looked like a strong system and
+was in fact a broken measurement: with the answer in the context window, the
+test measures reading comprehension, not knowledge.
+
+Fine-tuning changes weights. Removing the passages dropped the base model to
+64.3% and revealed a +5.4 point effect that the open-book version had been
+structurally incapable of detecting.
+
+An evaluation that cannot distinguish the thing being changed is not a
+conservative evaluation. It is a broken one.
+
+## A benchmark that reports zeros instead of failing
+
+The first vLLM benchmark run returned 0.0 tok/s at every concurrency level
+after 32 consecutive HTTP 404s. It printed a clean, plausible-looking table of
+zeroes and exited successfully.
+
+The cause was a default: `--model` defaulted to the weights directory rather
+than the served model name, which vLLM rejects. The deeper problem is that a
+harness which reports zeroes on total failure produces numbers that can be
+quoted by accident. It now resolves defaults from settings, and a failed run
+should be loud.
+
+## Invisible characters in a header produce an empty 400
+
+The Anthropic API returned `400` with `content-length: 0` and no error body.
+The key was 168 characters instead of 108 and printed as empty when sliced —
+carriage returns from a Windows clipboard paste. HTTP headers cannot contain
+them, so the request was rejected at the edge before it ever reached the API,
+which is why there was no message to read.
+
+Secrets read interactively are now stripped of whitespace, and the length and
+non-secret prefix are echoed as a check.

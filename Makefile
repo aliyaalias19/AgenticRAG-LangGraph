@@ -1,4 +1,4 @@
-.PHONY: install lint format typecheck test check ingest generate-questions \
+.PHONY: eval-crosslingual eval-mcq-closedbook install lint format typecheck test check ingest generate-questions \
         label-questions verify-questions build-sft embed load-index \
         eval-retrieval eval-quality eval-security eval-mcq bench serve \
         demo up down logs clean
@@ -73,3 +73,17 @@ demo:
 clean:
 	rm -rf .pytest_cache .ruff_cache .mypy_cache
 	find . -type d -name __pycache__ -exec rm -rf {} +
+
+eval-crosslingual:
+	uv run python scripts/eval_crosslingual.py --no-title --query-chars 150
+
+eval-mcq-closedbook:
+	uv run python scripts/run_mcq_closedbook.py --label base --model base-llama
+	uv run python scripts/run_mcq_closedbook.py --label tuned-awq --model k8s-assistant-awq
+
+eval-crosslingual:
+	uv run python scripts/eval_crosslingual.py --no-title --query-chars 150
+
+eval-mcq-closedbook:
+	uv run python scripts/run_mcq_closedbook.py --label base --model base-llama
+	uv run python scripts/run_mcq_closedbook.py --label tuned-awq --model k8s-assistant-awq

@@ -97,14 +97,23 @@ def main(argv: list[str] | None = None) -> int:
     for chunk in chunks:
         by_document.setdefault(chunk.doc_id, []).append(chunk)
 
-    sampled = sample_documents(
-        documents,
-        total=args.examples + args.mcq,
-        section_weights=settings.eval.section_weights,
-        min_chars=settings.eval.min_document_chars,
-        max_chars=settings.eval.max_document_chars,
-        seed=settings.random_seed + 1,
-    )
+    # Sample both languages. The assistant is bilingual, so drawing training
+    # data from English alone teaches it half the task -- and the English pool
+    # is not large enough to fill the requested dataset on its own.
+    per_language = (args.examples + args.mcq) // 2 + 1
+    sampled = []
+    for offset, language in ((1, "en"), (2, "zh")):
+        sampled.extend(
+            sample_documents(
+                documents,
+                total=per_language,
+                section_weights=settings.eval.section_weights,
+                min_chars=settings.eval.min_document_chars,
+                max_chars=settings.eval.max_document_chars,
+                seed=settings.random_seed + offset,
+                language=language,
+            )
+        )
     provider = build_provider(settings)
 
     examples: list[InstructionExample] = []

@@ -316,5 +316,5 @@ def build_index(chunks: list[ChunkLike], tenant: str = "public") -> BM25Index:
                 source_path=chunk.source_path,
             )
         )
-        index.finalise()
+    index.finalise()
     return index

@@ -73,7 +73,11 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.compare:
         base_path = settings.paths.results_dir / "mcq_base.json"
-        if base_path.is_file():
+        if args.label == "base":
+            # Comparing the baseline against itself yields a zero difference and
+            # looks like a valid "no change" result. Refuse rather than mislead.
+            print("--compare is for a tuned run; the baseline cannot compare to itself")
+        elif base_path.is_file():
             payload = json.loads(base_path.read_text(encoding="utf-8"))
             base = MCQResult(
                 label=payload["label"],

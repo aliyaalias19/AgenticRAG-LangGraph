@@ -1,0 +1,104 @@
+[
+  {
+    "config_name": "dense_only",
+    "signals": "dense",
+    "questions": 266,
+    "recall_at_5": 0.5025,
+    "recall_at_10": 0.5727,
+    "precision_at_5": 0.1128,
+    "hit_at_10": 0.609,
+    "mrr": 0.4208,
+    "ndcg_at_10": 0.4459,
+    "by_question_type": {
+      "direct": 0.8488,
+      "multi_hop": 0.7943,
+      "paraphrased": 0.2869,
+      "scenario": 0.358
+    }
+  },
+  {
+    "config_name": "bm25_only",
+    "signals": "bm25",
+    "questions": 266,
+    "recall_at_5": 0.5633,
+    "recall_at_10": 0.6266,
+    "precision_at_5": 0.1308,
+    "hit_at_10": 0.6842,
+    "mrr": 0.5022,
+    "ndcg_at_10": 0.5171,
+    "by_question_type": {
+      "direct": 0.9012,
+      "multi_hop": 0.9184,
+      "paraphrased": 0.3333,
+      "scenario": 0.3642
+    }
+  },
+  {
+    "config_name": "sparse_only",
+    "signals": "sparse",
+    "questions": 266,
+    "recall_at_5": 0.5069,
+    "recall_at_10": 0.5833,
+    "precision_at_5": 0.115,
+    "hit_at_10": 0.6165,
+    "mrr": 0.4362,
+    "ndcg_at_10": 0.4608,
+    "by_question_type": {
+      "direct": 0.8895,
+      "multi_hop": 0.7624,
+      "paraphrased": 0.2405,
+      "scenario": 0.4414
+    }
+  },
+  {
+    "config_name": "hybrid_rrf",
+    "signals": "dense,sparse,bm25",
+    "questions": 266,
+    "recall_at_5": 0.5952,
+    "recall_at_10": 0.6704,
+    "precision_at_5": 0.1376,
+    "hit_at_10": 0.718,
+    "mrr": 0.5104,
+    "ndcg_at_10": 0.5349,
+    "by_question_type": {
+      "direct": 0.936,
+      "multi_hop": 0.8475,
+      "paraphrased": 0.4346,
+      "scenario": 0.4383
+    }
+  },
+  {
+    "config_name": "hybrid_rrf_rerank",
+    "signals": "dense,sparse,bm25",
+    "questions": 266,
+    "recall_at_5": 0.6466,
+    "recall_at_10": 0.7224,
+    "precision_at_5": 0.1489,
+    "hit_at_10": 0.782,
+    "mrr": 0.5614,
+    "ndcg_at_10": 0.5819,
+    "by_question_type": {
+      "direct": 0.9593,
+      "multi_hop": 0.8582,
+      "paraphrased": 0.5127,
+      "scenario": 0.534
+    }
+  },
+  {
+    "config_name": "hybrid_rrf_rerank_deep",
+    "signals": "dense,sparse,bm25",
+    "questions": 266,
+    "recall_at_5": 0.6541,
+    "recall_at_10": 0.7155,
+    "precision_at_5": 0.1504,
+    "hit_at_10": 0.7707,
+    "mrr": 0.561,
+    "ndcg_at_10": 0.5805,
+    "by_question_type": {
+      "direct": 0.936,
+      "multi_hop": 0.8688,
+      "paraphrased": 0.5063,
+      "scenario": 0.537
+    }
+  }
+]
